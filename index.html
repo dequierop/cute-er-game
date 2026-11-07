@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>เวรฉุกเฉินระบบหมุนเวียนเลือด (Cute Edition)</title>
+<title>เวรฉุกเฉิน ระบบหมุนเวียนเลือด by KRUPOY</title>
 <!-- เปลี่ยนฟอนต์เป็น Mali เพื่อความน่ารักและอ่านง่ายแบบลายมือ -->
 <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -190,12 +190,27 @@ select, input {
   align-items: center;
   justify-content: center;
 }
+
+/* Pixel-art visual update: title hero + reusable hospital gameplay backdrop */
+#menu { position: relative; }
+.title-hero { display:block; width:100%; height:auto; max-height:390px; object-fit:cover; object-position:center; border:4px solid #f3a5c7; border-radius:22px; box-shadow:0 5px 0 #d982ad; margin:4px auto 18px; image-rendering:pixelated; }
+#menu h1 { display:none; }
+#menu > p.mut { background:rgba(255,255,255,.88); border:2px solid #f3b5d0; border-radius:16px; padding:9px 12px; }
+#game { position:relative; isolation:isolate; min-height:72vh; padding:12px; border-radius:24px; overflow:hidden; }
+#game::before { content:""; position:absolute; inset:0; z-index:-2; background-image:url('assets/hospital-room-bg.png'); background-size:cover; background-position:center; opacity:.92; }
+#game::after { content:""; position:absolute; inset:0; z-index:-1; background:rgba(255,245,251,.38); pointer-events:none; }
+#game .box { background:rgba(255,255,255,.93); backdrop-filter:blur(2px); }
+#game .case, #game .data, #game .ex { background-color:rgba(255,255,255,.94); }
+.site-credit { text-align:center; color:#98617f; font-size:12px; font-weight:700; padding:12px 8px 18px; margin:12px auto 0; }
+.site-credit span { display:inline-block; background:rgba(255,255,255,.82); border:2px solid #f3bfd5; border-radius:999px; padding:5px 14px; }
+@media(max-width:420px){ .title-hero{max-height:300px;border-width:3px} #game{padding:7px} }
+
 </style>
 </head>
 <body>
 <main>
 <section id="menu">
-<h1>🎀 เวรฉุกเฉิน 🎀<br>ระบบหมุนเวียนเลือด</h1>
+<img class="title-hero" src="assets/title-hero.png" alt="เวรฉุกเฉิน ระบบหมุนเวียนเลือด by KRUPOY">
 <p class="mut" style="text-align: center;">เกมทบทวนชีววิทยา ม.5 แสนสนุก!<br>รับเคสคนไข้ ตัดสินใจ แล้วดูผลทันที ✨</p>
 <div class="box">
 <button id="bSolo">🧸 เล่นเดี่ยว: หมอเวรน่ารัก</button>
@@ -215,6 +230,7 @@ select, input {
 <section id="game" class="hidden"></section>
 <section id="result" class="hidden"></section>
 </main>
+<footer class="site-credit"><span>💗 พัฒนาโดยครูภัทรกันย์ กิติยศ 💗</span></footer>
 <script>
 // ข้อมูลคำถามเหมือนเดิม
 var Q=[
