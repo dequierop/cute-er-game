@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เวรฉุกเฉินระบบหมุนเวียนเลือด (Cute Edition)</title>
+<!-- เปลี่ยนฟอนต์เป็น Mali เพื่อความน่ารักและอ่านง่ายแบบลายมือ -->
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ธีมสีพาสเทลน่ารัก */
+:root {
+  --bg: #fff0f5; /* สีพื้นหลังชมพูอ่อน (Lavender Blush) */
+  --card: #ffffff; /* สีพื้นหลังการ์ด */
+  --ink: #5d4037; /* ตัวหนังสือสีน้ำตาลเข้มแทนสีดำเพื่อความละมุน */
+  --mut: #8d6e63; /* ตัวหนังสือสีรอง */
+  --gold: #ffda79; /* สีเหลืองทองน่ารัก */
+  --green: #81c784; /* สีเขียวมิ้นต์ */
+  --red: #ff8a80; /* สีแดงอมชมพู */
+  --line: #d4a5a5; /* สีเส้นขอบชมพูตุ่น */
+  --accent: #f48fb1; /* สีชมพูเน้นข้อความ/ปุ่ม */
+  --ok: #e8f5e9;
+  --bad: #ffebee;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #3e2723;
+    --card: #4e342e;
+    --ink: #fff8e1;
+    --mut: #bcaaa4;
+    --line: #5d4037;
+    --ok: #33691e;
+    --bad: #b71c1c;
+    --gold: #ffb300;
+    --accent: #f06292;
+  }
+}
+* { box-sizing: border-box; }
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: var(--ink); 
+  font-family: "Mali", cursive, sans-serif; 
+  line-height: 1.6; 
+}
+main { max-width: 560px; margin: 0 auto; padding: 16px; }
+
+/* หัวเรื่องและการจัดข้อความแบบน่ารัก */
+h1, .px { font-family: "Mali", cursive; font-weight: 700; }
+h1 { 
+  font-size: 22px; 
+  line-height: 1.5; 
+  margin: 12px 0; 
+  text-align: center; 
+  color: var(--accent);
+}
+/* กล่องข้อความสไตล์สติ๊กเกอร์ */
+.box { 
+  background: var(--card); 
+  border: 3px solid var(--accent); 
+  border-radius: 20px; 
+  box-shadow: 4px 4px 0 var(--accent); 
+  padding: 16px; 
+  margin: 16px 0; 
+}
+/* ปุ่มสไตล์บับเบิ้ล */
+button { 
+  font: inherit; 
+  font-weight: 700;
+  color: var(--ink); 
+  background: var(--gold); 
+  border: 3px solid var(--accent); 
+  border-radius: 16px; 
+  box-shadow: 3px 3px 0 var(--accent); 
+  padding: 12px 16px; 
+  cursor: pointer; 
+  width: 100%; 
+  margin: 8px 0; 
+  font-size: 16px; 
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+button:active { 
+  transform: translate(3px, 3px); 
+  box-shadow: 0px 0px 0 var(--accent); 
+}
+button:focus-visible, select:focus-visible, input:focus-visible { 
+  outline: 4px solid var(--accent); 
+  outline-offset: 2px; 
+}
+button.alt { 
+  background: var(--card); 
+  color: var(--ink); 
+}
+button:disabled { 
+  opacity: 0.6; 
+  cursor: default; 
+  transform: none; 
+  box-shadow: 3px 3px 0 var(--accent); 
+}
+.opt { background: var(--card); color: var(--ink); text-align: left; }
+.opt.ok { background: var(--ok); border-color: var(--green); box-shadow: 3px 3px 0 var(--green); }
+.opt.bad { background: var(--bad); border-color: var(--red); box-shadow: 3px 3px 0 var(--red); }
+.bar { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; flex-wrap: wrap; font-weight: 600;}
+.tag { 
+  display: inline-block; 
+  background: var(--accent); 
+  color: #fff; 
+  border-radius: 12px; 
+  padding: 2px 10px; 
+  font-size: 13px; 
+  font-weight: 600;
+}
+.mut { color: var(--mut); font-size: 14px; }
+/* กล่องเคสคนไข้น่ารักๆ */
+.case { 
+  background: #fff9c4; 
+  color: var(--ink); 
+  border: 3px dashed #ffb74d; 
+  border-radius: 16px; 
+  padding: 12px; 
+  margin: 12px 0; 
+  font-weight: 600;
+}
+/* ข้อมูล Data สีหวานๆ */
+.data { 
+  font-family: "Mali", cursive; 
+  font-weight: 700;
+  font-size: 13px; 
+  color: #1565c0; 
+  background: #e3f2fd; 
+  border-radius: 12px; 
+  padding: 10px; 
+  margin: 8px 0; 
+  border: 2px solid #90caf9;
+}
+.ex { 
+  border-left: 6px solid var(--accent); 
+  padding: 8px 12px; 
+  margin: 12px 0; 
+  background: var(--card); 
+  border-radius: 0 12px 12px 0;
+}
+label { display: block; margin: 8px 0 2px; font-weight: 600; color: var(--accent);}
+select, input { 
+  font: inherit; 
+  width: 100%; 
+  padding: 10px; 
+  border: 3px solid var(--line); 
+  border-radius: 12px; 
+  background: var(--card); 
+  color: var(--ink); 
+}
+.row { display: flex; gap: 8px; }
+.row > * { flex: 1; }
+.teams { display: flex; gap: 8px; flex-wrap: wrap; }
+.tm { 
+  flex: 1; 
+  min-width: 90px; 
+  border: 3px solid var(--line); 
+  border-radius: 12px; 
+  padding: 6px 10px; 
+  font-size: 13px; 
+  background: var(--card); 
+  text-align: center;
+}
+.tm.on { 
+  background: var(--gold); 
+  color: var(--ink); 
+  border-color: var(--accent);
+  box-shadow: 2px 2px 0 var(--accent);
+}
+.meter { 
+  height: 12px; 
+  background: var(--card); 
+  border: 2px solid var(--accent); 
+  border-radius: 8px; 
+  overflow: hidden; 
+}
+.meter i { display: block; height: 100%; background: var(--accent); width: 0; transition: width 0.3s ease; }
+.hidden { display: none; }
+/* อวาตาร์แบบกลมๆ น่ารักๆ */
+.avatar-wrap {
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+</head>
+<body>
+<main>
+<section id="menu">
+<h1>🎀 เวรฉุกเฉิน 🎀<br>ระบบหมุนเวียนเลือด</h1>
+<p class="mut" style="text-align: center;">เกมทบทวนชีววิทยา ม.5 แสนสนุก!<br>รับเคสคนไข้ ตัดสินใจ แล้วดูผลทันที ✨</p>
+<div class="box">
+<button id="bSolo">🧸 เล่นเดี่ยว: หมอเวรน่ารัก</button>
+<p class="mut">8 เคสต่อรอบ มี 3 พลังใจ ข้อที่ผิดจะวนกลับมาอีกครั้งนะ ฮึบๆ ✌️</p>
+</div>
+<div class="box">
+<button id="bTeam">🩺 เล่นทีม: ทีมแพทย์จิ๋ว</button>
+<p class="mut">2-4 ทีมสลับกันรับเคส หมุนบทบาทช่วยกันทุกเคสเลย 🤝</p>
+</div>
+<div class="box">
+<button class="alt" id="bRep">📋 รายงานเวรประจำวัน</button>
+<p class="mut">ดูสถิติสะสม หัวข้อที่ต้องทบทวน และเวรล่าสุด</p>
+</div>
+</section>
+
+<section id="setup" class="hidden"></section>
+<section id="game" class="hidden"></section>
+<section id="result" class="hidden"></section>
+</main>
+<script>
+// ข้อมูลคำถามเหมือนเดิม
+var Q=[
+{t:"องค์ประกอบของเลือด",lv:1,c:"คนไข้เหนื่อยง่าย หน้าซีด",d:"Hb 6 g/dL (ปกติ 12-16)",q:"คนไข้ขาดเม็ดเลือดแดง ควรให้ส่วนประกอบเลือดใด",o:["เม็ดเลือดแดงเข้มข้น","เกล็ดเลือดเข้มข้น","วัคซีน","น้ำเกลือเท่านั้น"],a:0,e:"Hb ต่ำแปลว่าเม็ดเลือดแดงน้อย เม็ดเลือดแดงมีฮีโมโกลบินพาออกซิเจน จึงให้เม็ดเลือดแดงทดแทน"},
+{t:"หลอดเลือด",lv:1,c:"แผลที่แขน เลือดสีสดพุ่งเป็นจังหวะ",d:"",q:"เลือดออกจากหลอดเลือดชนิดใด",o:["อาร์เตอรี (นำเลือดออกจากหัวใจ)","เวน (นำเลือดกลับสู่หัวใจ)","คาพิลลารี (หลอดเลือดฝอย)","หลอดน้ำเหลือง"],a:0,e:"อาร์เตอรีมีเลือดออกซิเจนสูง สีสด และพุ่งตามแรงบีบของหัวใจ"},
+{t:"หลอดเลือด",lv:1,c:"แผลที่ขา เลือดสีคล้ำไหลซึมสม่ำเสมอ ไม่พุ่ง",d:"",q:"น่าจะเป็นเลือดจากหลอดเลือดชนิดใด",o:["เวน (นำเลือดกลับสู่หัวใจ)","อาร์เตอรี (นำเลือดออกจากหัวใจ)","คาพิลลารี (หลอดเลือดฝอย)","หลอดน้ำเหลือง"],a:0,e:"เวนความดันต่ำ เลือดออกซิเจนต่ำจึงสีคล้ำ และไหลซึมสม่ำเสมอ"},
+{t:"หมู่เลือด",lv:2,c:"อุบัติเหตุ ต้องรับเลือดด่วน",d:"ผู้ป่วยหมู่ B Rh+",q:"เม็ดเลือดแดงหมู่ใดให้ผู้ป่วยรายนี้ได้",o:["หมู่ B และ O","หมู่ A และ AB","หมู่ AB เท่านั้น","ทุกหมู่"],a:0,e:"หมู่ B มีแอนติบอดี anti-A ในพลาสมา จึงรับ A หรือ AB ไม่ได้ รับได้เฉพาะ B และ O"},
+{t:"หัวใจ",lv:1,c:"เรียงเส้นทางเลือดจากร่างกายกลับหัวใจ",d:"",q:"เลือดจาก vena cava เข้าห้องหัวใจห้องแรกคือห้องใด",o:["ห้องบนขวา","ห้องบนซ้าย","ห้องล่างขวา","ห้องล่างซ้าย"],a:0,e:"เลือดจากร่างกายเข้าห้องบนขวา ก่อนลงห้องล่างขวา แล้วไปปอด"},
+{t:"หลอดเลือด",lv:2,c:"แผนภาพวงจรเลือดไปปอด",d:"",q:"หลอดเลือดใดนำเลือดออกซิเจนต่ำออกจากหัวใจไปปอด",o:["พัลโมนารีอาร์เตอรี","พัลโมนารีเวน","เอออร์ตา","เวนาคาวา"],a:0,e:"พัลโมนารีอาร์เตอรีเป็นอาร์เตอรีที่นำเลือดออกซิเจนต่ำจากห้องล่างขวาไปปอด จึงเป็นข้อยกเว้นของอาร์เตอรี"},
+{t:"หัวใจ",lv:1,c:"ตรวจลิ้นหัวใจ",d:"",q:"ลิ้นระหว่างห้องบนซ้ายกับห้องล่างซ้ายคือลิ้นใด",o:["ไบคัสปิด (ไมทรัล)","ไตรคัสปิด","เซมิลูนาร์ที่เอออร์ตา","เซมิลูนาร์ที่พัลโมนารี"],a:0,e:"ไบคัสปิดหรือไมทรัลมี 2 แผ่น กั้นห้องซ้าย ไตรคัสปิดกั้นห้องขวา"},
+{t:"การนำไฟฟ้าหัวใจ",lv:2,c:"ดูตัวกำเนิดจังหวะหัวใจ",d:"",q:"โครงสร้างใดเป็นตัวกำเนิดจังหวะ (pacemaker) ของหัวใจ",o:["SA node","AV node","Purkinje fibers","ลิ้นหัวใจ"],a:0,e:"SA node ที่ห้องบนขวาสร้างสัญญาณไฟฟ้าก่อน จึงเป็นตัวกำเนิดจังหวะ"},
+{t:"การนำไฟฟ้าหัวใจ",lv:3,c:"วิเคราะห์ ECG ที่ผิดปกติ",d:"ลำดับสัญญาณถูกสลับ",q:"ลำดับการนำสัญญาณไฟฟ้าที่ถูกต้องคือข้อใด",o:["SA node, AV node, Bundle of His, Purkinje fibers","AV node, SA node, Purkinje fibers, Bundle of His","SA node, Purkinje fibers, AV node, Bundle of His","Bundle of His, AV node, SA node, Purkinje fibers"],a:0,e:"สัญญาณเริ่มที่ SA node ผ่าน AV node (หน่วงเล็กน้อย) ลง Bundle of His แล้วกระจายโดย Purkinje fibers"},
+{t:"หลอดเลือด",lv:1,c:"ดูการแลกเปลี่ยนสารที่เนื้อเยื่อ",d:"",q:"หลอดเลือดฝอยแลกเปลี่ยนสารได้ดีเพราะเหตุใด",o:["ผนังบางเพียงชั้นเดียว","ผนังหนามีกล้ามเนื้อมาก","มีลิ้นกันไหลย้อน","ความดันสูงที่สุด"],a:0,e:"ผนังหลอดเลือดฝอยเป็นเซลล์เยื่อบุชั้นเดียว แก๊สและสารจึงแพร่ผ่านได้ง่าย"},
+{t:"ความดันและชีพจร",lv:3,c:"ผู้ป่วยเสียเลือดมาก ผิวเย็นซีด ซึม",d:"BP 80/50 | HR 130",q:"ข้อมูลนี้สอดคล้องกับภาวะใดมากที่สุด",o:["ภาวะช็อกจากการเสียเลือด","ความดันโลหิตสูง","สุขภาพปกติ","หัวใจเต้นช้า"],a:0,e:"เลือดลดทำให้ความดันตก หัวใจเต้นเร็วเพื่อชดเชย ผิวเย็นซีดเพราะเลือดไปเลี้ยงอวัยวะสำคัญก่อน"},
+{t:"องค์ประกอบของเลือด",lv:1,c:"ปั่นแยกตัวอย่างเลือดในหลอด",d:"",q:"ส่วนประกอบใดมีปริมาตรมากที่สุดในเลือด",o:["พลาสมา","เม็ดเลือดแดง","เม็ดเลือดขาว","เกล็ดเลือด"],a:0,e:"พลาสมาประมาณร้อยละ 55 ของปริมาตรเลือด ส่วนใหญ่เป็นน้ำ"},
+{t:"องค์ประกอบของเลือด",lv:2,c:"ถอนฟันแล้วเลือดไหลไม่หยุด",d:"เกล็ดเลือด 20,000 (ปกติ 150,000-400,000)",q:"ส่วนประกอบใดที่ผู้ป่วยขาด",o:["เกล็ดเลือด ซึ่งช่วยให้เลือดแข็งตัว","เม็ดเลือดแดง ซึ่งพาออกซิเจน","เม็ดเลือดขาว ซึ่งต้านเชื้อโรค","น้ำเหลือง"],a:0,e:"เกล็ดเลือดอุดรอยฉีกขาดและกระตุ้นการแข็งตัวของเลือด เมื่อต่ำจึงเลือดออกไม่หยุด"},
+{t:"องค์ประกอบของเลือด",lv:2,c:"ไข้สูงสามวัน",d:"WBC 18,000 (ปกติ 4,000-11,000)",q:"ค่านี้บ่งชี้เรื่องใดมากที่สุด",o:["ร่างกายกำลังตอบสนองต่อการติดเชื้อ","ขาดออกซิเจน","เลือดแข็งตัวผิดปกติ","เสียเลือด"],a:0,e:"เม็ดเลือดขาวทำหน้าที่ป้องกันเชื้อโรค จึงเพิ่มจำนวนเมื่อมีการติดเชื้อ"},
+{t:"หมู่เลือด",lv:3,c:"แม่ตั้งครรภ์ครั้งที่สอง",d:"แม่ Rh- | ลูกในท้อง Rh+ | ครรภ์แรกลูก Rh+",q:"อาจเกิดปัญหาใดกับทารก",o:["แอนติบอดี anti-Rh ของแม่ทำลายเม็ดเลือดแดงทารก","ทารกไม่มีหมู่เลือด","แม่ไม่ผลิตเม็ดเลือดแดง","ไม่มีปัญหา เพราะ Rh ไม่เกี่ยวกับการตั้งครรภ์"],a:0,e:"ครรภ์แรกแม่ถูกกระตุ้นให้สร้าง anti-Rh ครรภ์ต่อมาแอนติบอดีผ่านรกไปทำลายเม็ดเลือดแดงทารก Rh+"},
+{t:"ความดันและชีพจร",lv:2,c:"นั่งพัก 10 นาที วัดชีพจร",d:"HR 150 ครั้ง/นาที (ปกติ 60-100)",q:"ผลนี้เรียกว่าอะไร",o:["หัวใจเต้นเร็วกว่าปกติ","หัวใจเต้นช้ากว่าปกติ","จังหวะปกติ","หัวใจหยุดเต้น"],a:0,e:"ขณะพักชีพจรเกิน 100 ครั้ง/นาทีถือว่าเร็ว ควรหาสาเหตุ เช่น ไข้ ขาดน้ำ เสียเลือด หรือความผิดปกติของหัวใจ"},
+{t:"หลอดเลือด",lv:2,c:"เปรียบเทียบหลอดเลือดที่ขา",d:"",q:"หลอดเลือดชนิดใดมีลิ้นกันเลือดไหลย้อนกลับ",o:["เวน","อาร์เตอรี","หลอดเลือดฝอย","เอออร์ตา"],a:0,e:"ความดันในเวนต่ำ ลิ้นช่วยให้เลือดไหลทางเดียวกลับหัวใจ"},
+{t:"หัวใจ",lv:2,c:"ดูภาพตัดขวางหัวใจ",d:"",q:"ผนังห้องใดหนาที่สุด เพราะเหตุใด",o:["ห้องล่างซ้าย เพราะต้องสูบฉีดเลือดไปทั่วร่างกาย","ห้องบนขวา เพราะรับเลือดจากร่างกาย","ห้องล่างขวา เพราะส่งเลือดไปปอดไกลที่สุด","ห้องบนซ้าย เพราะรับเลือดจากปอด"],a:0,e:"ห้องล่างซ้ายส่งเลือดไปทั่วร่างกายซึ่งต้องใช้แรงดันสูง กล้ามเนื้อจึงหนาที่สุด"},
+{t:"หลอดเลือด",lv:1,c:"ทบทวนทางออกของหัวใจห้องล่างซ้าย",d:"",q:"หลอดเลือดใดนำเลือดออกซิเจนสูงออกจากหัวใจไปเลี้ยงร่างกาย",o:["เอออร์ตา","เวนาคาวา","พัลโมนารีเวน","พัลโมนารีอาร์เตอรี"],a:0,e:"เอออร์ตาเป็นอาร์เตอรีขนาดใหญ่ที่รับเลือดจากห้องล่างซ้ายแล้วแตกแขนงไปทั่วร่างกาย"},
+{t:"หัวใจ",lv:2,c:"เลือดที่มีออกซิเจนสูงจากปอดกำลังกลับหัวใจ",d:"",q:"เลือดออกซิเจนสูงจากปอดกลับเข้าหัวใจผ่านหลอดเลือดใด และเข้าห้องใด",o:["พัลโมนารีเวน เข้าห้องบนซ้าย","พัลโมนารีอาร์เตอรี เข้าห้องบนขวา","เวนาคาวา เข้าห้องบนซ้าย","เอออร์ตา เข้าห้องล่างซ้าย"],a:0,e:"พัลโมนารีเวนนำเลือดออกซิเจนสูงจากปอดเข้าห้องบนซ้าย เป็นเวนที่นำเลือดที่มีออกซิเจนสูง"},
+{t:"หมู่เลือด",lv:1,c:"คลังเลือดฉุกเฉินไม่ทราบหมู่ผู้ป่วย",d:"",q:"เม็ดเลือดแดงหมู่ใดมักถูกเรียกว่าผู้ให้ทั่วไป (ในระบบ ABO)",o:["หมู่ O","หมู่ AB","หมู่ A","หมู่ B"],a:0,e:"เม็ดเลือดแดงหมู่ O ไม่มีแอนติเจน A และ B จึงไม่ถูกแอนติบอดีของผู้รับทำลายในระบบ ABO"},
+{t:"หมู่เลือด",lv:2,c:"ผู้ป่วยหมู่ AB ต้องรับเลือด",d:"",q:"เหตุใดผู้ป่วยหมู่ AB จึงรับเม็ดเลือดแดงได้ทุกหมู่ในระบบ ABO",o:["ไม่มี anti-A และ anti-B ในพลาสมา","มีทั้ง anti-A และ anti-B","ไม่มีแอนติเจนบนเม็ดเลือดแดง","พลาสมามี anti-Rh เสมอ"],a:0,e:"หมู่ AB มีแอนติเจน A และ B บนเม็ดเลือดแดง แต่พลาสมาไม่มี anti-A หรือ anti-B จึงไม่ต้านเม็ดเลือดแดงที่รับมา"},
+{t:"ความดันและชีพจร",lv:1,c:"วัดความดันที่แขน",d:"BP 120/80 mmHg",q:"ค่า 120 คือความดันในช่วงใด",o:["ขณะหัวใจห้องล่างบีบตัว (ซิสโตลิก)","ขณะหัวใจคลายตัว (ไดแอสโตลิก)","ความดันในเวน","ความดันของน้ำเหลือง"],a:0,e:"ค่าตัวบนคือความดันขณะหัวใจบีบตัว ค่าตัวล่างคือความดันขณะหัวใจคลายตัว"},
+{t:"ความดันและชีพจร",lv:2,c:"วัดความดันหลายครั้ง ทุกครั้งใกล้เคียงกัน",d:"BP 160/100 mmHg",q:"ผลนี้บ่งชี้ภาวะใด",o:["ความดันโลหิตสูง","ความดันโลหิตต่ำ","ความดันปกติ","หัวใจหยุดเต้น"],a:0,e:"ความดันตั้งแต่ประมาณ 140/90 ขึ้นไปถือว่าสูง ควรปรึกษาแพทย์เพื่อประเมินและควบคุม"},
+{t:"ระบบน้ำเหลือง",lv:2,c:"เนื้อเยื่อบวมเพราะของเหลวคั่งที่ขา",d:"",q:"ระบบน้ำเหลืองช่วยเรื่องใดเกี่ยวกับของเหลวในร่างกาย",o:["ลำเลียงของเหลวส่วนเกินจากเนื้อเยื่อกลับสู่เลือด","สูบฉีดเลือดไปปอด","สร้างเม็ดเลือดแดง","ลำเลียงแก๊สออกซิเจน"],a:0,e:"น้ำเหลืองรวบรวมของเหลวที่ซึมออกจากหลอดเลือดฝอยแล้วนำกลับเข้าสู่เวน"},
+{t:"องค์ประกอบของเลือด",lv:3,c:"นักปีนเขาอยู่ที่สูงสองสัปดาห์ ตรวจเลือดซ้ำ",d:"เม็ดเลือดแดงเพิ่มจากเดิมอย่างชัดเจน",q:"เพราะเหตุใดจำนวนเม็ดเลือดแดงจึงเพิ่ม",o:["ออกซิเจนต่ำกระตุ้นให้ไขกระดูกสร้างเม็ดเลือดแดงมากขึ้น","ร่างกายติดเชื้อ","เกล็ดเลือดต่ำ","ลิ้นหัวใจรั่ว"],a:0,e:"ที่สูงออกซิเจนในอากาศน้อย ร่างกายตอบสนองด้วยการสร้างเม็ดเลือดแดงเพิ่มเพื่อพาออกซิเจนได้มากขึ้น"},
+{t:"หัวใจ",lv:3,c:"ฟังเสียงหัวใจผิดปกติ ลิ้นไมทรัลรั่ว",d:"",q:"ลิ้นไมทรัลรั่วส่งผลอย่างไร",o:["เลือดไหลย้อนจากห้องล่างซ้ายกลับห้องบนซ้าย หัวใจต้องทำงานหนักขึ้น","เลือดไหลจากห้องบนขวาไปปอดโดยตรง","หัวใจไม่ต้องบีบตัว","เลือดที่มีออกซิเจนสูงและต่ำหยุดไหลเวียน"],a:0,e:"ลิ้นปิดไม่สนิทเลือดจึงไหลย้อน ปริมาณเลือดที่ออกสู่ร่างกายลดลง หัวใจจึงต้องชดเชยด้วยการทำงานหนักขึ้น"},
+{t:"หัวใจ",lv:2,c:"เจ็บหน้าอกรุนแรง สงสัยกล้ามเนื้อหัวใจขาดเลือด",d:"",q:"หลอดเลือดโคโรนารีทำหน้าที่อะไร",o:["ส่งเลือดไปเลี้ยงกล้ามเนื้อหัวใจเอง","นำเลือดไปปอด","นำเลือดไปสมอง","นำเลือดกลับจากร่างกาย"],a:0,e:"กล้ามเนื้อหัวใจต้องการออกซิเจนเอง จึงมีหลอดเลือดโคโรนารีแตกแขนงจากเอออร์ตามาเลี้ยง หากอุดตันจะเกิดอาการเจ็บหน้าอกหรือหัวใจวาย"},
+{t:"องค์ประกอบของเลือด",lv:1,c:"ดูเม็ดเลือดแดงใต้กล้องจุลทรรศน์",d:"",q:"เม็ดเลือดแดงเต็มวัยของคนไม่มีนิวเคลียส ผลดีคืออะไร",o:["มีพื้นที่บรรจุฮีโมโกลบินได้มากขึ้น","แบ่งเซลล์ได้เร็วขึ้น","สร้างแอนติบอดีได้","ทำลายเชื้อโรคได้"],a:0,e:"การไม่มีนิวเคลียสทำให้มีที่ว่างสำหรับฮีโมโกลบินมากขึ้น จึงลำเลียงออกซิเจนได้ดี"},
+{t:"องค์ประกอบของเลือด",lv:2,c:"ผู้ป่วยสูดดมควันไฟ ปวดศีรษะ มึนงง",d:"ตรวจพบ COHb สูง",q:"ทำไมคาร์บอนมอนอกไซด์จึงอันตราย",o:["ฮีโมโกลบินจับ CO ได้แน่นกว่า O2 ทำให้ลำเลียงออกซิเจนได้น้อยลง","ทำให้เม็ดเลือดแดงแตก","ทำให้เลือดแข็งตัว","ทำลายเกล็ดเลือด"],a:0,e:"CO แย่งจับฮีโมโกลบินและหลุดยาก เซลล์จึงขาดออกซิเจนทั้งที่หายใจอยู่"},
+{t:"องค์ประกอบของเลือด",lv:1,c:"ผู้ป่วยโลหิตจางจากไขกระดูกผิดปกติ",d:"",q:"เซลล์เม็ดเลือดถูกสร้างที่อวัยวะใดเป็นหลัก",o:["ไขกระดูก","ตับ","ไต","ม้ามเท่านั้น"],a:0,e:"เซลล์เม็ดเลือดทุกชนิดมีต้นกำเนิดจากไขกระดูก (bone marrow)"},
+{t:"ความดันและชีพจร",lv:2,c:"นักวิ่งหลังวิ่งเสร็จ",d:"HR 160 ครั้ง/นาที",q:"เหตุใดหัวใจจึงเต้นเร็วขึ้นขณะออกกำลังกาย",o:["กล้ามเนื้อต้องการออกซิเจนและพลังงานมากขึ้น","เลือดในร่างกายลดลง","ลิ้นหัวใจรั่ว","SA node หยุดทำงาน"],a:0,e:"เมื่อออกกำลังกาย หัวใจต้องส่งเลือดออกซิเจนสูงไปกล้ามเนื้อมากขึ้น จึงเต้นเร็วและแรงขึ้น"},
+{t:"หัวใจ",lv:1,c:"ทบทวนวงจรการไหลเวียนเลือด",d:"",q:"การไหลเวียนเลือดจากหัวใจห้องล่างขวาไปปอดแล้วกลับห้องบนซ้ายเรียกว่าอะไร",o:["วงจรเลือดไปปอด (pulmonary circulation)","วงจรเลือดไปทั่วร่างกาย (systemic circulation)","วงจรน้ำเหลือง","วงจรโคโรนารี"],a:0,e:"วงจรเลือดไปปอดนำเลือดออกซิเจนต่ำไปรับออกซิเจน แล้วกลับเข้าห้องบนซ้าย"},
+{t:"หลอดเลือด",lv:2,c:"จับชีพจรที่ข้อมือ",d:"",q:"เหตุใดจึงจับชีพจรได้จากอาร์เตอรี",o:["ผนังยืดหยุ่นและขยายตามแรงดันเลือดที่พุ่งออกจากหัวใจ","มีลิ้นกันไหลย้อน","ผนังบางเพียงชั้นเดียว","เลือดไหลช้าที่สุด"],a:0,e:"ทุกครั้งที่หัวใจบีบตัว ผนังอาร์เตอรียืดหยุ่นขยายตัว เราจึงรู้สึกเป็นชีพจร"},
+{t:"หมู่เลือด",lv:2,c:"ตรวจหมู่เลือดผู้ป่วยหมู่ A",d:"",q:"ผู้ป่วยหมู่ A มีสารใดบนเม็ดเลือดแดงและในพลาสมา",o:["แอนติเจน A บนเม็ดเลือดแดง และ anti-B ในพลาสมา","แอนติเจน B บนเม็ดเลือดแดง และ anti-A ในพลาสมา","แอนติเจน A และ B และไม่มีแอนติบอดี","ไม่มีแอนติเจน และมี anti-A กับ anti-B"],a:0,e:"หมู่ A มีแอนติเจน A จึงสร้าง anti-B ไว้ในพลาสมา"},
+{t:"ระบบน้ำเหลือง",lv:2,c:"ต่อมน้ำเหลืองที่คอบวม มีไข้",d:"",q:"ต่อมน้ำเหลืองบวมสัมพันธ์กับหน้าที่ใด",o:["มีเม็ดเลือดขาวชนิดลิมโฟไซต์สู้กับเชื้อโรค","ผลิตเม็ดเลือดแดง","สร้างฮอร์โมนควบคุมความดัน","กรองยูเรียออกจากเลือด"],a:0,e:"ต่อมน้ำเหลืองเป็นแหล่งของลิมโฟไซต์ เมื่อติดเชื้อจะเพิ่มกิจกรรมจึงบวม"},
+{t:"การนำไฟฟ้าหัวใจ",lv:3,c:"อธิบายการหน่วงสัญญาณที่ AV node",d:"",q:"การหน่วงสัญญาณที่ AV node มีประโยชน์อย่างไร",o:["ให้ห้องบนบีบไล่เลือดลงห้องล่างเสร็จก่อนห้องล่างบีบตัว","ให้ห้องล่างบีบก่อนห้องบน","ทำให้หัวใจเต้นเร็วขึ้น","ทำให้ลิ้นหัวใจปิดตลอด"],a:0,e:"สัญญาณที่ล่าช้าเล็กน้อยทำให้ห้องบนบีบตัวก่อน แล้วห้องล่างจึงบีบตามลำดับ"},
+{t:"หัวใจ",lv:3,c:"ทารกแรกเกิดมีรูรั่วที่ผนังกั้นห้องล่างซ้ายและขวา",d:"",q:"ความผิดปกตินี้ส่งผลอย่างไร",o:["เลือดออกซิเจนสูงและต่ำปนกัน ทำให้ประสิทธิภาพการลำเลียงลดลง","เลือดไม่ไหลเข้าห้องบน","หัวใจไม่มีลิ้น","เลือดไหลเฉพาะวงจรปอด"],a:0,e:"ผนังกั้นห้องล่างทำหน้าที่แยกเลือดซ้ายขวา เมื่อรั่วเลือดสองชนิดจึงปนกัน"}
+];
+var ROLES=["👩‍⚕️ หมอหลัก (กดตอบ)","📢 ผู้อ่านผล (อ่านค่าให้ทีม)","🧐 ผู้ตรวจสอบ (ค้านหรือยืนยัน)","📝 ผู้จดบันทึก"];
+var S={},T=null;
+function $(i){return document.getElementById(i)}
+function show(i){save();["menu","setup","game","result"].forEach(function(x){$(x).classList.toggle("hidden",x!==i)});window.scrollTo(0,0)}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+
+var P={g:"m",c:"#f48fb1",n:"หมอกระเต็น",h:"รพ. ใจดี"};
+var G={gold:100,eq:{},own:{},inv:{}};var H={shifts:[],topics:{}};
+try{var _d=JSON.parse(localStorage.getItem("circ1_cute")||"{}");if(_d.P)P=_d.P;if(_d.G)G=_d.G;if(_d.H)H=_d.H}catch(e){}
+function save(){try{localStorage.setItem("circ1_cute",JSON.stringify({P:P,G:G,H:H}))}catch(e){}}
+function recordShift(){var ok=0,bad=0,k;for(k in S.stats){ok+=S.stats[k].ok;bad+=S.stats[k].bad;var t=H.topics[k]=H.topics[k]||{ok:0,bad:0};t.ok+=S.stats[k].ok;t.bad+=S.stats[k].bad}
+ H.shifts.unshift({d:new Date().toLocaleDateString("th-TH",{day:"numeric",month:"short"}),m:S.mode,s:S.mode==="solo"?S.score:Math.max.apply(null,S.teams.map(function(t){return t.score})),ok:ok,n:ok+bad});H.shifts=H.shifts.slice(0,30)}
+function report(){
+ var t=0,o=0,k,rows=[];for(k in H.topics){var x=H.topics[k],n=x.ok+x.bad;o+=x.ok;t+=n;rows.push({k:k,p:Math.round(x.ok/n*100),n:n})}
+ rows.sort(function(a,b){return a.p-b.p});
+ var h='<h1>📋 รายงานเวรประจำวัน</h1><div class="box"><div style="display:flex;gap:10px;align-items:center"><div class="avatar-wrap">'+doc(P.g,P.c,56,1)+'</div><div><b>'+esc(P.n)+'</b><br><span class="mut">'+esc(P.h)+'</span></div></div>';
+ h+='<p class="px" style="font-size:12px;line-height:2;margin-top:12px;">ขึ้นเวรไปแล้ว '+H.shifts.length+' ครั้ง<br>ตอบถูก '+o+'/'+t+(t?' ('+Math.round(o/t*100)+'%)':'')+'<br>🪙 '+G.gold+' เหรียญ</p>';
+ h+='<h3 style="margin:16px 0 4px; color: var(--accent)">✨ ความแม่นยำรายหัวข้อ</h3>';
+ if(!rows.length)h+='<p class="mut">ยังไม่มีข้อมูลเลย ลองไปเล่นสักเวรก่อนนะค้าบ 🥰</p>';
+ rows.forEach(function(r){h+='<div style="margin:8px 0"><div class="bar"><span>'+r.k+'</span><span>'+r.p+'%'+(r.p<60&&r.n>=3?' · ฮึบๆ ต้องทบทวนนะ ✌️':'')+'</span></div><div class="meter"><i style="width:'+r.p+'%;background:'+(r.p<60?'var(--red)':'var(--green)')+'"></i></div></div>'});
+ h+='<h3 style="margin:16px 0 4px; color: var(--accent)">📅 เวรล่าสุด</h3>';
+ H.shifts.slice(0,8).forEach(function(s){h+='<p style="margin:6px 0; border-bottom: 1px dashed var(--line); padding-bottom: 6px;">'+s.d+' · '+(s.m==="solo"?"หมอเดี่ยว 🧸":"ทีมจิ๋ว 🩺")+' · '+s.s+' คะแนน <span class="mut">(ถูก '+s.ok+'/'+s.n+')</span></p>'});
+ h+='<button class="alt" id="rb">กลับเมนู 🏡</button><button class="alt" id="rr" style="border-color:var(--red); color:var(--red)">ล้างข้อมูลทั้งหมด 🗑️</button></div>';
+ $("setup").innerHTML=h;show("setup");
+ $("rb").onclick=function(){show("menu")};
+ $("rr").onclick=function(){var b=$("rr");if(!b.dataset.s){b.dataset.s=1;b.textContent="แตะอีกครั้งเพื่อยืนยันการล้างข้อมูล 🥺";return}H={shifts:[],topics:{}};G={gold:100,eq:{},own:{},inv:{}};save();report()};
+}
+$("bRep").onclick=report;
+var ITEMS=[{k:"glass",n:"แว่นตาเด็กเรียน",p:100,t:"eq",ic:"👓"},{k:"mask",n:"หน้ากากอนามัยสีพาสเทล",p:80,t:"eq",ic:"😷"},{k:"gown",n:"เสื้อกาวน์หมอน้อย",p:200,t:"eq",ic:"🥼"},{k:"badge",n:"บัตรแพทย์ฝึกหัด",p:60,t:"eq",ic:"🪪"},{k:"coffee",n:"นมเย็นแสนดี (+1 พลังใจเวรหน้า)",p:150,t:"use",ic:"🥤"},{k:"book",n:"สมุดโน้ตเวทมนตร์ (ใบ้ฟรี 1 ครั้ง)",p:120,t:"use",ic:"📒"}];
+function useItem(k){var n=G.inv[k]||0;if(n>0){G.inv[k]--;return 1}return 0}
+function shop(){save();
+ var h='<h1>🛍️ ร้านค้าสวัสดิการสุดคิวท์</h1><div class="box"><div style="display:flex;gap:10px;align-items:center"><div class="avatar-wrap">'+doc(P.g,P.c,64,1)+'</div><p class="px" style="font-size:14px; font-weight: bold; color: var(--gold); background: var(--ink); padding: 4px 12px; border-radius: 20px;">🪙 '+G.gold+'</p></div>';
+ ITEMS.forEach(function(it){var o=G.own[it.k],u=it.t==="use",n=G.inv[it.k]||0;
+  h+='<div class="case" style="display:flex;gap:8px;align-items:center;justify-content:space-between"><span>'+it.ic+' '+it.n+(u?' <br><span class="mut">(มี '+n+' ชิ้น)</span>':'')+'</span><button style="width:auto;margin:0; font-size:14px;" data-k="'+it.k+'">'+(o&&!u?(G.eq[it.k]?"ถอด ❌":"ใส่ ✨"):"ซื้อ "+it.p+" 🪙")+'</button></div>'});
+ h+='<p class="mut">ได้เหรียญทองจากการตอบถูกในโหมดเล่นเดี่ยวนะ เก็บไว้ใช้ข้ามรอบได้เลย! 🎉</p><button class="alt" id="bk2">กลับไปเตรียมตัว 🏡</button></div>';
+ $("setup").innerHTML=h;
+ document.querySelectorAll("[data-k]").forEach(function(b){b.onclick=function(){var it=ITEMS.filter(function(x){return x.k===b.dataset.k})[0];
+  if(it.t==="eq"&&G.own[it.k]){G.eq[it.k]=!G.eq[it.k]}
+  else if(G.gold>=it.p){G.gold-=it.p;if(it.t==="use")G.inv[it.k]=(G.inv[it.k]||0)+1;else{G.own[it.k]=1;G.eq[it.k]=1}}
+  shop()}});
+ $("bk2").onclick=soloSetup;
+}
+function doc(g,c,z,a){var f=g==="f",r=function(x,y,w,h,k){return'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+k+'" rx="0.5"/>'};
+ var s=(f?r(3,4,2,7,"#5D4037")+r(11,4,2,7,"#5D4037"):"")+r(4,4,8,6,"#ffccbc")+r(4,4,8,1,"#5D4037")+r(4,1,8,3,c)+r(3,3,10,1,c)+r(5,6,2,2,"#3e2723")+r(9,6,2,2,"#3e2723")+r(4,8,1,1,"#ff8a80")+r(11,8,1,1,"#ff8a80")+r(7,9,2,1,"#e57373")+r(3,11,10,6,c)+r(2,11,1,5,c)+r(13,11,1,5,c)+r(6,11,1,3,"#fff")+r(9,11,1,3,"#fff")+r(7,14,2,1,"#cfd6dd")+r(4,17,3,2,c)+r(9,17,3,2,c)+r(4,19,3,1,"#fff")+r(9,19,3,1,"#fff");
+ if(a){var e=G.eq;if(e.gown)s+=r(3,11,10,6,"#fff")+r(2,11,1,5,"#fff")+r(13,11,1,5,"#fff")+r(6,11,1,3,"#ffccbc")+r(9,11,1,3,"#ffccbc")+r(7,14,2,1,"#ff8a80");if(e.badge)s+=r(10,13,2,2,"#fff")+r(10,13,2,1,"#e63946");if(e.mask)s+=r(4,8,8,2,"#e0f7fa");if(e.glass)s+=r(4,5,8,1,"#3e2723")+r(4,8,8,1,"#3e2723")+r(4,5,1,4,"#3e2723")+r(7,5,2,4,"#3e2723")+r(11,5,1,4,"#3e2723")}
+ return'<svg viewBox="0 0 16 20" width="'+z+'" height="'+(z*1.25)+'" shape-rendering="crispEdges" aria-hidden="true" style="overflow:visible">'+s+'</svg>'}
+function soloSetup(){
+ $("setup").innerHTML='<h1>🧸 สร้างหมอของคุณ 🧸</h1><div class="box"><p class="mut" style="text-align:center">แตะตัวละครเพื่อเลือกเพศ</p><div class="row" id="pick"></div><label style="margin-top:16px;">🎨 สีชุดและหมวกประจำตัว</label><div class="row" id="cols" style="flex-wrap:wrap;"></div><label for="nm" style="margin-top:16px;">📝 ชื่อคุณหมอ</label><input id="nm" value="'+esc(P.n)+'" maxlength="20"><label for="hp">🏥 สถาบัน / โรงพยาบาล</label><input id="hp" value="'+esc(P.h)+'" maxlength="30"><label for="tm">⏳ โหมดเวลา</label><select id="tm"><option value="0">ชิลๆ ไม่จับเวลา ☕</option><option value="25">ตื่นเต้น! 25 วินาทีต่อเคส ⚡</option></select><button class="alt" id="shp" style="margin-top: 16px;">🛍️ ร้านค้าสวัสดิการ (🪙 '+G.gold+')</button><button id="go">🚀 เข้าเวรเลย!</button><button class="alt" id="bk">กลับเมนู 🏡</button></div>';
+ function draw(){
+  var a="";[["m","หมอผู้ชาย 👦"],["f","หมอผู้หญิง 👧"]].forEach(function(x){
+      var btnClass = P.g===x[0] ? "" : "alt";
+      a+='<button class="'+btnClass+'" data-g="'+x[0]+'" aria-pressed="'+(P.g===x[0])+'" style="display:flex; flex-direction:column; align-items:center; gap:8px;"><div class="avatar-wrap">'+doc(x[0],P.c,60,1)+'</div>'+x[1]+'</button>'});
+  $("pick").innerHTML=a;
+  var b="";[["#f48fb1","ชมพู 🌸"],["#81c784","เขียวมิ้นต์ 🌿"],["#64b5f6","ฟ้าสดใส ☁️"],["#ba68c8","ม่วงพาสเทล 🔮"]].forEach(function(x){b+='<button class="'+(P.c===x[0]?"":"alt")+'" data-c="'+x[0]+'" style="font-size:14px;"><span style="display:inline-block;width:14px;height:14px;background:'+x[0]+';border:2px solid var(--line);border-radius:50%;vertical-align:middle;margin-right:4px;"></span> '+x[1]+'</button>'});
+  $("cols").innerHTML=b;
+  document.querySelectorAll("[data-g]").forEach(function(e){e.onclick=function(){P.g=e.dataset.g;draw()}});
+  document.querySelectorAll("[data-c]").forEach(function(e){e.onclick=function(){P.c=e.dataset.c;draw()}});
+ }
+ draw();show("setup");$("shp").onclick=function(){P.n=$("nm").value||P.n;P.h=$("hp").value||P.h;shop()};
+ $("bk").onclick=function(){show("menu")};
+ $("go").onclick=function(){P.n=$("nm").value||"หมอ";P.h=$("hp").value||"รพ. ใจดี";startSolo(P.n,+$("tm").value)};
+}
+$("bSolo").onclick=function(){soloSetup()};
+
+$("bTeam").onclick=function(){
+ $("setup").innerHTML='<h1>🩺 ทีมแพทย์จิ๋ว 🩺</h1><div class="box"><div class="row"><div><label for="nt">จำนวนทีม 👥</label><select id="nt"><option>2</option><option>3</option><option>4</option></select></div><div><label for="nmem">สมาชิกต่อทีม</label><select id="nmem"><option>3</option><option>4</option></select></div></div><label for="rc" style="margin-top:16px;">เคสต่อทีม 🗂️</label><select id="rc"><option value="2">2 เคส (ไวๆ)</option><option value="3" selected>3 เคส (กำลังดี)</option></select><p class="mut" style="text-align:center; margin-top:16px;">ทุกเคสบทบาทหมุนเวียน เพื่อให้ทุกคนได้เป็นหมอหลักนะ ช่วยกันน้า 💖</p><button id="go">🚀 เริ่มเวรทีมเลย!</button><button class="alt" id="bk">กลับเมนู 🏡</button></div>';
+ show("setup");$("bk").onclick=function(){show("menu")};
+ $("go").onclick=function(){startTeam(+$("nt").value,+$("nmem").value,+$("rc").value)};
+};
+
+function startSolo(name,tm){
+ S={mode:"solo",P:{g:P.g,c:P.c,h:P.h},name:name,tm:tm,queue:shuffle(Q).slice(0,8),i:0,gold:G.gold,lives:3+useItem("coffee"),free:useItem("book"),score:0,hints:0,retried:{},stats:{},streak:0};
+ render();
+}
+function startTeam(n,m,r){
+ var teams=[];for(var k=0;k<n;k++)teams.push({name:"ทีม "+(k+1),score:0,gold:100,ok:0});
+ var cnt=Math.min(16,n*r);
+ S={mode:"team",n:n,m:m,teams:teams,queue:shuffle(Q).slice(0,cnt),i:0,stats:{}};
+ render();
+}
+function hearts(n){var s="";for(var i=0;i<Math.max(3,n);i++)s+=i<n?"💖":"🤍";return s}
+
+function render(){
+ clearInterval(T);
+ if(S.i>=S.queue.length)return finish();
+ var q=S.queue[S.i];S.cur={hid:[],done:false};
+ var h='<div class="box" style="border-width: 4px;">';
+ if(S.mode==="solo"){
+  h+='<div style="display:flex;gap:10px;align-items:center;margin-bottom:12px"><div class="avatar-wrap">'+doc(S.P.g,S.P.c,44,1)+'</div><div><b>คุณ'+esc(S.name)+'</b><br><span class="mut">'+esc(S.P.h)+'</span></div></div><div class="bar"><span>เคส '+(S.i+1)+'/'+S.queue.length+' 🗂️</span><span>'+hearts(S.lives)+'</span><span>🪙 '+S.gold+'</span><span style="color:var(--accent);">⭐ '+S.score+'</span></div>';
+ }else{
+  var tix=S.i%S.n,rnd=Math.floor(S.i/S.n);
+  h+='<div class="bar"><span>เคสที่ '+(S.i+1)+'/'+S.queue.length+' 🗂️</span></div><div class="teams" style="margin:12px 0">';
+  S.teams.forEach(function(t,k){h+='<div class="tm'+(k===tix?' on':'')+'"><div class="avatar-wrap" style="margin-bottom:6px; border:none; padding:0;">'+doc(k%2?"f":"m",["#f48fb1","#81c784","#64b5f6","#ba68c8"][k],32)+'</div><br><b>'+t.name+'</b><br>⭐ '+t.score+' | 🪙 '+t.gold+'</div>'});
+  h+='</div>';
+ }
+ h+='<div class="meter" style="margin:12px 0"><i style="width:'+(S.i/S.queue.length*100)+'%"></i></div>';
+ if(S.mode==="team"){
+  var t=S.teams[tix],first=rnd%S.m;
+  h+='<p style="background:var(--ok); padding:10px; border-radius:12px; border:2px solid var(--green)">🌟 <b>'+t.name+'</b> รับเคสนะค้าบ บทบาทรอบนี้คือ:</p><ul class="mut" style="margin:8px 0;padding-left:24px">';
+  for(var r=0;r<Math.min(S.m,4);r++)h+='<li><b>คนที่ '+(((first+r)%S.m)+1)+'</b>: '+ROLES[r]+'</li>';
+  h+='</ul>';
+ }
+ h+='<span class="tag">🏷️ '+q.t+' · เลเวล '+q.lv+'</span>';
+ h+='<div class="case">🩺 <b>อาการ:</b> '+esc(q.c)+'</div>';
+ if(q.d)h+='<div class="data">📊 <b>ผลตรวจ:</b> '+esc(q.d)+'</div>';
+ h+='<p style="font-size:16px; margin-top:16px;">🤔 <b>'+esc(q.q)+'</b></p><div id="opts">';
+ shuffleOpts(q).forEach(function(o){h+='<button class="opt" data-i="'+o.i+'">✨ '+esc(o.s)+'</button>'});
+ h+='</div><div id="tools" style="margin-top:12px;"></div><div id="fb"></div>';
+ var tools='';
+ tools+='<button class="alt" id="hint">💡 ใช้หูฟังแพทย์วิเศษ (ตัดช้อยส์ผิด −30 🪙)</button>';
+ h+='</div>';
+ $("game").innerHTML=h;show("game");
+ $("tools").innerHTML=tools;
+ document.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){answer(+b.dataset.i,b)}});
+ $("hint").onclick=hint;
+ if(S.mode==="solo"&&S.tm){
+  S.left=S.tm;var el=document.createElement("p");el.id="clk";el.className="px";el.style="font-size:14px; text-align:center; color:var(--red); font-weight:bold;";$("tools").appendChild(el);
+  tick();T=setInterval(tick,1000);
+ }
+}
+function shuffleOpts(q){
+ if(!S.cur.order)S.cur.order=shuffle(q.o.map(function(s,i){return{s:s,i:i}}));
+ return S.cur.order;
+}
+function tick(){
+ var c=$("clk");if(!c)return;c.textContent="⏳ เวลาเหลือ "+S.left+" วินาที!";
+ if(S.left<=0){clearInterval(T);answer(-1)}S.left--;
+}
+function goldOf(){return S.mode==="solo"?S.gold:S.teams[S.i%S.n].gold}
+function hint(){
+ if(S.cur.done)return;
+ var fr=S.mode==="solo"&&S.free&&!S.fu;if(!fr&&goldOf()<30){$("hint").textContent="เหรียญทองไม่พอจ้า 🥺";return}
+ var q=S.queue[S.i];
+ var wrong=[];document.querySelectorAll(".opt").forEach(function(b){if(+b.dataset.i!==q.a&&!b.disabled)wrong.push(b)});
+ if(wrong.length<2){return}
+ shuffle(wrong).slice(0,2).forEach(function(b){b.disabled=true;b.style.opacity=.35; b.style.boxShadow="none"});
+ if(fr)S.fu=1;else if(S.mode==="solo")S.gold-=30;else S.teams[S.i%S.n].gold-=30;
+ S.cur.hinted=true;$("hint").disabled=true;$("hint").textContent="✨ ตัดตัวเลือกผิดให้แล้ว 2 ข้อ! ลุยเลย!";
+}
+function answer(i,btn){
+ if(S.cur.done)return;S.cur.done=true;clearInterval(T);
+ var q=S.queue[S.i],ok=i===q.a;
+ var st=S.stats[q.t]=S.stats[q.t]||{ok:0,bad:0};
+ document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;if(+b.dataset.i===q.a)b.classList.add("ok");else if(b===btn)b.classList.add("bad")});
+ $("hint").disabled=true;
+ var pts=40*q.lv,msg;
+ if(ok){
+  st.ok++;
+  if(S.mode==="solo"){S.streak++;var bonus=S.streak>=3?20:0;S.score+=pts+bonus;S.gold+=30+bonus;msg="เยี่ยมมาก! คนไข้ปลอดภัย 🎉 +"+pts+" คะแนน"+(bonus?" (โบนัสต่อเนื่อง +"+bonus+"!)":"")}
+  else{var t=S.teams[S.i%S.n];t.score+=pts;t.gold+=30;t.ok++;msg=t.name+" ตอบถูก เก่งจัง! 🎉 +"+pts+" คะแนน"}
+ }else{
+  st.bad++;
+  if(S.mode==="solo"){
+   S.streak=0;S.lives--;msg=i<0?"หมดเวลา! ⏰ คนไข้อาการแย่ลง 🥺":"แง๊! คนไข้อาการแย่ลง 🥺";
+   if(!S.retried[S.i]&&S.lives>0){S.retried[S.i]=1;S.queue.push(q);msg+=" (เดี๋ยวข้อนี้จะวนมาให้แก้ตัวใหม่นะ ฮึบๆ 💪)"}
+  }else msg="ตอบผิดอ่า 🥺 คนไข้ต้องรอการรักษาต่อไปนะ";
+ }
+ var f=$("fb");
+ f.innerHTML='<p style="font-size: 16px; color: '+(ok?'var(--green)':'var(--red)')+';"><b>'+(ok?"✅ ":"❌ ")+msg+'</b></p><div class="ex">💡 <b>รู้หรือไม่:</b> '+esc(q.e)+'</div><button id="nx">'+((S.mode==="solo"&&S.lives<=0)||S.i+1>=S.queue.length?"ดูสรุปผลกันเถอะ 📊":"เคสถัดไป ลุย! 🚀")+'</button>';
+ $("nx").onclick=function(){S.i++;if(S.mode==="solo"&&S.lives<=0)S.i=S.queue.length;render()};
+ $("nx").focus();
+}
+function weak(){
+ var rows=Object.keys(S.stats).map(function(k){return{k:k,b:S.stats[k].bad,o:S.stats[k].ok}}).sort(function(a,b){return b.b-a.b});
+ var h='<h3 style="margin:16px 0 8px; color: var(--accent);">🔍 หัวข้อที่น่าทบทวน</h3>';
+ var any=rows.filter(function(r){return r.b>0});
+ if(!any.length)return h+'<p class="case" style="text-align:center; background: var(--ok); border-color: var(--green);">ไม่พลาดเลยสักหัวข้อ เก่งสุดๆ ปรบมือ! 👏👏</p>';
+ any.forEach(function(r){h+='<p style="margin:6px 0">• '+r.k+' <span class="mut">(พลาด '+r.b+' ถูก '+r.o+')</span></p>'});
+ return h;
+}
+function finish(){
+ clearInterval(T);if(S.mode==="solo")G.gold=S.gold;recordShift();var h='<h1>🎉 สรุปผลเวร 🎉</h1><div class="box" style="text-align:center;">';
+ if(S.mode==="solo"){
+  h+='<div class="avatar-wrap" style="margin-bottom:12px;">'+doc(S.P.g,S.P.c,80,1)+'</div><p style="font-size:18px;"><b>คุณ'+esc(S.name)+'</b><br>'+(S.lives>0?"จบเวรครบทุกเคส เก่งมั่กๆ! 🎊":"หมดแรงซะก่อน พักผ่อนนะ 💤")+'</p><div class="case" style="display:inline-block; text-align:left;"><p style="margin:4px; font-size:16px;">⭐ คะแนนรวม: <b>'+S.score+'</b></p><p style="margin:4px; font-size:16px;">🪙 เหรียญทอง: <b>'+S.gold+'</b></p></div>';
+ }else{
+  var r=S.teams.slice().sort(function(a,b){return b.score-a.score});
+  h+='<p style="font-size:18px; color: var(--accent)"><b>🏆 อันดับทีม 🏆</b></p>';
+  r.forEach(function(t,k){
+      var medal = k===0 ? "🥇" : k===1 ? "🥈" : k===2 ? "🥉" : "🎀";
+      h+='<p class="case" style="text-align:left; margin:8px 0;">'+medal+' <b>'+t.name+'</b><br><span class="mut">ได้ไป '+t.score+' คะแนน (ตอบถูก '+t.ok+' เคส)</span></p>'});
+ }
+ h+='</div><div class="box" style="text-align:left;">'+weak()+'<button id="again" style="margin-top:16px;">🎮 เล่นอีกรอบให้ชื่นใจ</button><button class="alt" id="rp">📋 ดูรายงานเวร</button><button class="alt" id="mn">กลับเมนู 🏡</button></div>';
+ $("result").innerHTML=h;show("result");
+ $("again").onclick=function(){S.mode==="solo"?startSolo(S.name,S.tm):startTeam(S.n,S.m,S.queue.length/S.n)};
+ $("mn").onclick=function(){show("menu")};$("rp").onclick=report;
+}
+</script>
+</body>
+</html>
+```eof
