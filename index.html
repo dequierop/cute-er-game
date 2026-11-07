@@ -345,6 +345,31 @@ section.hidden{display:none!important}
 #pick .avatar-wrap{width:120px;height:120px;background:linear-gradient(145deg,#eaf8ff,#fff0f6);border-width:3px;box-shadow:0 3px 0 rgba(217,130,173,.4);}
 #pick .avatar-wrap svg{width:78px!important;height:98px!important;image-rendering:pixelated;shape-rendering:crispEdges;}
 @media(max-width:600px){#setup:not(.hidden){padding:14px 10px 24px;background-attachment:scroll}#pick>button{min-height:145px!important;padding:8px!important}#pick .avatar-wrap{width:94px;height:94px}#pick .avatar-wrap svg{width:62px!important;height:78px!important}}
+/* Full-screen gameplay layout with an animated doctor and answer reactions */
+#game{height:100svh;min-height:100svh;width:100%;padding:clamp(10px,1.6vw,24px);overflow:auto}
+#game .game-board{grid-template-columns:minmax(270px,.72fr) minmax(0,1.45fr);gap:clamp(10px,1.2vw,18px);min-height:0}
+#game .patient-panel{justify-content:flex-start;gap:clamp(9px,1.2vh,15px)}
+#game .patient-scene{min-height:clamp(170px,25vh,280px);flex:0 0 auto;gap:clamp(12px,2vw,30px)}
+#game .question-panel{justify-content:flex-start;gap:clamp(10px,1.5vh,18px)}
+#game .question-title{margin:0}
+#game .question-text{margin:0}
+#game #opts{gap:clamp(8px,1vh,12px)}
+#game .opt{min-height:clamp(54px,7vh,78px);padding:12px 16px}
+#game .character-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-width:130px}
+#game .patient-avatar{display:flex;align-items:flex-end;justify-content:center;transform-origin:50% 100%;animation:doctor-idle 2s ease-in-out infinite}
+#game .patient-avatar svg{width:clamp(82px,9vw,132px)!important;height:auto!important;image-rendering:pixelated;filter:drop-shadow(0 5px 0 #e8b4cd)}
+#game .doctor-reaction{padding:7px 12px;border:2px solid #e9a6c7;border-radius:14px;background:#fff;color:#77445f;font-size:clamp(12px,1.15vw,16px);font-weight:700;text-align:center;box-shadow:0 3px 0 #d89bb8;transition:background .2s,transform .2s}
+#game .doctor-reaction.is-correct{background:#e5f8e9;border-color:#7cc992;color:#317446;transform:scale(1.05)}
+#game .doctor-reaction.is-wrong{background:#fff0dc;border-color:#edbd72;color:#8b5b28}
+#game .patient-avatar.reaction-correct{animation:doctor-cheer .7s ease-in-out 2}
+#game .patient-avatar.reaction-wrong{animation:doctor-worried .5s ease-in-out 2}
+#game .monitor{animation:heart-pulse 1.2s ease-in-out infinite;}
+@keyframes doctor-idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes doctor-cheer{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-24px) rotate(-7deg)}70%{transform:translateY(-10px) rotate(7deg)}}
+@keyframes doctor-worried{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px) rotate(-4deg)}75%{transform:translateX(7px) rotate(4deg)}}
+@keyframes heart-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@media(max-width:760px){#game{height:auto;min-height:100svh;overflow:visible}#game .game-board{grid-template-columns:1fr}#game .patient-scene{min-height:130px}#game .patient-panel{display:flex;align-items:stretch}#game .patient-panel>.tag,#game .patient-panel>div[style*="font-weight"]{grid-column:auto}#game .patient-avatar svg{width:72px!important}#game .question-panel{gap:9px}}
+@media(prefers-reduced-motion:reduce){#game .patient-avatar,#game .monitor{animation:none!important}#game .doctor-reaction{transition:none}}
 </style>
 </head>
 <body>
@@ -549,7 +574,7 @@ function render(){
  h+='<div class="hud-chip">💗 '+heartsNow+'</div><div class="hud-chip">⭐ คะแนน '+scoreNow+'</div><div class="hud-chip">🪙 เหรียญ '+goldNow+'</div><div class="hud-chip">🗂️ '+caseLabel+'</div></div>';
  h+='<div class="game-progress"><i style="width:'+Math.round(S.i/total*100)+'%"></i></div>';
  h+='<div class="game-board"><section class="patient-panel"><div class="tag">🚑 ห้องฉุกเฉิน · '+esc(q.t)+'</div>';
- h+='<div class="patient-scene"><div class="patient-avatar">'+(S.mode==="solo"?doc(S.P.g,S.P.c,72,1):'🧑‍⚕️')+'</div><div class="monitor">💓<br><span style="font-size:12px">ECG</span></div></div>';
+ h+='<div class="patient-scene"><div class="character-stage"><div id="doctorReaction" class="doctor-reaction">พร้อมดูแลคนไข้! ✨</div><div id="doctorCharacter" class="patient-avatar">'+(S.mode==="solo"?doc(S.P.g,S.P.c,84,1):doc("m","#81c784",84,1))+'</div></div><div class="monitor">💓<br><span style="font-size:12px">ECG</span></div></div>';
  h+='<div style="font-weight:700;color:#8b5574">🩺 แฟ้มผู้ป่วย</div><div class="case"><b>อาการ:</b><br>'+esc(q.c)+'</div>';
  if(q.d)h+='<div class="data"><b>📋 ผลตรวจ:</b><br>'+esc(q.d)+'</div>';
  if(S.mode==="team"){
@@ -591,6 +616,9 @@ function hint(){
 function answer(i,btn){
  if(S.cur.done)return;S.cur.done=true;clearInterval(T);
  var q=S.queue[S.i],ok=i===q.a;
+ var actor=$("doctorCharacter"),reaction=$("doctorReaction");
+ if(actor){actor.classList.remove("reaction-correct","reaction-wrong");actor.classList.add(ok?"reaction-correct":"reaction-wrong")}
+ if(reaction){reaction.textContent=ok?"เยี่ยมมาก! คนไข้ปลอดภัย 💖":"ไม่เป็นไรนะ ลองเคสถัดไปกัน 💪";reaction.classList.toggle("is-correct",ok);reaction.classList.toggle("is-wrong",!ok)}
  if(ok)Music.correct();else Music.wrong();
  var st=S.stats[q.t]=S.stats[q.t]||{ok:0,bad:0};
  document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;if(+b.dataset.i===q.a)b.classList.add("ok");else if(b===btn)b.classList.add("bad")});
@@ -639,6 +667,7 @@ function finish(){
 </script>
 </body>
 </html>
+
 
 
 
