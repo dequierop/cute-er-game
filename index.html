@@ -370,6 +370,13 @@ section.hidden{display:none!important}
 @keyframes heart-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 @media(max-width:760px){#game{height:auto;min-height:100svh;overflow:visible}#game .game-board{grid-template-columns:1fr}#game .patient-scene{min-height:130px}#game .patient-panel{display:flex;align-items:stretch}#game .patient-panel>.tag,#game .patient-panel>div[style*="font-weight"]{grid-column:auto}#game .patient-avatar svg{width:72px!important}#game .question-panel{gap:9px}}
 @media(prefers-reduced-motion:reduce){#game .patient-avatar,#game .monitor{animation:none!important}#game .doctor-reaction{transition:none}}
+/* Portrait screens: center the doctor in the title artwork and widen the menu */
+@media(max-width:1024px) and (orientation:portrait){
+ #menu>.title-hero{object-position:0% center}
+ #menu>.menu-title{left:4%;right:4%;top:9%;width:92%;transform:none}
+ #menu>.menu-actions{left:50%;right:auto;transform:translateX(-50%);bottom:clamp(88px,11vh,126px);width:min(92vw,620px);padding:10px;gap:8px}
+ #menu>.site-credit{left:50%;transform:translateX(-50%);bottom:12px;white-space:nowrap}
+}
 </style>
 </head>
 <body>
@@ -667,6 +674,7 @@ function finish(){
 </script>
 </body>
 </html>
+
 
 
 
