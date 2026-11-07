@@ -327,6 +327,11 @@ main{width:100%;max-width:none;margin:0;padding:0}
 }
 @media(max-width:420px){#menu>.title-hero{object-position:50% 28%}#menu>.menu-actions{bottom:72px}#menu>.site-credit span{font-size:9px;padding:4px 8px}}
 
+/* Visible title overlay on the open sky area of the title artwork */
+#menu>.menu-title{position:absolute;z-index:2;right:4vw;top:12vh;width:min(43vw,700px);padding:clamp(14px,2vw,26px);text-align:center;background:rgba(255,250,244,.82);border:3px solid rgba(255,255,255,.95);border-radius:26px;box-shadow:0 7px 0 rgba(193,115,155,.52),0 12px 30px rgba(75,60,90,.18);backdrop-filter:blur(3px)}
+#menu>.menu-title h1{display:block;margin:0;color:#bd4f83;font-family:"Mali",cursive;font-size:clamp(34px,5vw,72px);line-height:1.15;font-weight:700;text-shadow:0 3px 0 #fff,0 6px 0 rgba(202,128,162,.38);letter-spacing:.02em}
+#menu>.menu-title p{margin:8px 0 0;color:#624257;font-weight:700;font-size:clamp(13px,1.55vw,22px);line-height:1.45}
+@media(max-width:760px){#menu>.menu-title{right:4%;top:10%;width:92%;padding:10px 12px;border-radius:18px}#menu>.menu-title h1{font-size:clamp(27px,8vw,42px)}#menu>.menu-title p{font-size:clamp(11px,3.5vw,15px);margin-top:3px}}
 </style>
 </head>
 <body>
@@ -334,6 +339,7 @@ main{width:100%;max-width:none;margin:0;padding:0}
 <section id="menu">
 <div class="audio-controls"><button id="musicToggle" type="button">🎵 เพลง: ปิด</button><button id="sfxToggle" type="button">🔊 เสียง: เปิด</button></div>
 <img class="title-hero" src="assets/title-screen.png" alt="เวรฉุกเฉิน ระบบหมุนเวียนเลือด by KRUPOY">
+<div class="menu-title"><h1>เวรฉุกเฉิน</h1><p>ระบบหมุนเวียนเลือด · เกมทบทวนชีววิทยา ม.5</p></div>
 <p class="menu-intro">เกมทบทวนชีววิทยา ม.5 · รับเคสคนไข้ วินิจฉัย และช่วยเหลือผู้ป่วย ✨</p>
 <div class="menu-actions">
 <button id="bSolo">▶ เริ่มเกม · เล่นเดี่ยว</button>
@@ -608,5 +614,7 @@ function finish(){
 </script>
 </body>
 </html>
+
+
 
 
