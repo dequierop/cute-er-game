@@ -335,6 +335,16 @@ main{width:100%;max-width:none;margin:0;padding:0}
 
 /* Ensure screen sections stay hidden even when their IDs define display styles */
 section.hidden{display:none!important}
+/* Character creation: pastel pixel hospital scene and clear character cards */
+#setup:not(.hidden){position:relative;isolation:isolate;max-width:none;min-height:100svh;padding:clamp(18px,3vh,38px) 16px 30px;background:linear-gradient(90deg,rgba(255,239,247,.48),rgba(245,251,255,.48)),url('assets/character-select-bg.png') center/cover fixed;}
+#setup:not(.hidden)>h1,#setup:not(.hidden)>.box{width:min(100%,900px);margin-left:auto;margin-right:auto;}
+#setup:not(.hidden)>h1{display:block;margin-top:0;color:#bd4f83;text-shadow:0 2px #fff,0 4px rgba(198,125,159,.36);}
+#setup:not(.hidden)>.box{background:rgba(255,253,250,.94);backdrop-filter:blur(4px);}
+#pick>button{min-height:180px!important;justify-content:center;background:rgba(255,255,255,.92);border-width:3px;border-radius:22px;box-shadow:0 6px 0 #d982ad,0 10px 20px rgba(90,55,80,.12);font-size:clamp(15px,1.5vw,19px)!important;}
+#pick>button[aria-pressed="true"]{background:linear-gradient(180deg,#fff4bd,#ffe18a);border-color:#ed9fbd;}
+#pick .avatar-wrap{width:120px;height:120px;background:linear-gradient(145deg,#eaf8ff,#fff0f6);border-width:3px;box-shadow:0 3px 0 rgba(217,130,173,.4);}
+#pick .avatar-wrap svg{width:78px!important;height:98px!important;image-rendering:pixelated;shape-rendering:crispEdges;}
+@media(max-width:600px){#setup:not(.hidden){padding:14px 10px 24px;background-attachment:scroll}#pick>button{min-height:145px!important;padding:8px!important}#pick .avatar-wrap{width:94px;height:94px}#pick .avatar-wrap svg{width:62px!important;height:78px!important}}
 </style>
 </head>
 <body>
@@ -453,11 +463,23 @@ function shop(fromMenu){save();
   shop()}});
  $("bk2").onclick=function(){if(fromMenu)show("menu");else soloSetup()};
 }
-function doc(g,c,z,a){var f=g==="f",r=function(x,y,w,h,k){return'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+k+'" rx="0.5"/>'};
- var s=(f?r(3,4,2,7,"#5D4037")+r(11,4,2,7,"#5D4037"):"")+r(4,4,8,6,"#ffccbc")+r(4,4,8,1,"#5D4037")+r(4,1,8,3,c)+r(3,3,10,1,c)+r(5,6,2,2,"#3e2723")+r(9,6,2,2,"#3e2723")+r(4,8,1,1,"#ff8a80")+r(11,8,1,1,"#ff8a80")+r(7,9,2,1,"#e57373")+r(3,11,10,6,c)+r(2,11,1,5,c)+r(13,11,1,5,c)+r(6,11,1,3,"#fff")+r(9,11,1,3,"#fff")+r(7,14,2,1,"#cfd6dd")+r(4,17,3,2,c)+r(9,17,3,2,c)+r(4,19,3,1,"#fff")+r(9,19,3,1,"#fff");
- if(a){var e=G.eq;if(e.gown)s+=r(3,11,10,6,"#fff")+r(2,11,1,5,"#fff")+r(13,11,1,5,"#fff")+r(6,11,1,3,"#ffccbc")+r(9,11,1,3,"#ffccbc")+r(7,14,2,1,"#ff8a80");if(e.badge)s+=r(10,13,2,2,"#fff")+r(10,13,2,1,"#e63946");if(e.mask)s+=r(4,8,8,2,"#e0f7fa");if(e.glass)s+=r(4,5,8,1,"#3e2723")+r(4,8,8,1,"#3e2723")+r(4,5,1,4,"#3e2723")+r(7,5,2,4,"#3e2723")+r(11,5,1,4,"#3e2723")}
- return'<svg viewBox="0 0 16 20" width="'+z+'" height="'+(z*1.25)+'" shape-rendering="crispEdges" aria-hidden="true" style="overflow:visible">'+s+'</svg>'}
-function soloSetup(){
+function doc(g,c,z,a){
+ var f=g==="f",r=function(x,y,w,h,k){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+k+'"/>'};
+ var skin="#ffd8c6",hair="#594b67",coat="#fffdf7",ink="#493c4e",scrub=c||"#f48fb1";
+ var s=r(9,38,14,2,"#b987a4");
+ if(f){s+=r(7,10,3,14,hair)+r(22,10,3,14,hair)+r(6,12,3,7,hair)+r(23,12,3,7,hair)}else{s+=r(8,11,3,8,hair)+r(21,11,3,8,hair)}
+ s+=r(9,7,14,13,skin)+r(8,10,2,8,skin)+r(22,10,2,8,skin);
+ s+=r(8,6,16,4,hair)+r(7,8,4,5,hair)+r(21,8,4,5,hair);
+ if(f){s+=r(10,4,12,2,hair)+r(12,3,8,2,hair)+r(7,12,3,3,hair)+r(23,12,3,3,hair)}else{s+=r(10,5,12,2,hair)+r(12,4,8,2,hair)}
+ s+=r(10,12,3,2,ink)+r(19,12,3,2,ink)+r(11,12,1,1,"#fff")+r(20,12,1,1,"#fff")+r(9,16,2,1,"#f49aa8")+r(21,16,2,1,"#f49aa8")+r(14,17,4,1,"#c96d82")+r(15,18,2,1,"#fff");
+ s+=r(11,2,10,3,scrub)+r(9,4,14,2,scrub)+r(14,3,4,2,"#fff")+r(15,3,2,4,"#f7f1eb");
+ s+=r(8,21,16,11,coat)+r(6,22,3,9,coat)+r(23,22,3,9,coat)+r(12,21,3,11,scrub)+r(17,21,3,11,scrub)+r(14,23,4,2,"#ef91b6")+r(15,24,2,7,"#fff")+r(10,28,3,2,"#d8d6df")+r(19,28,3,2,"#d8d6df");
+ s+=r(10,32,5,5,scrub)+r(17,32,5,5,scrub)+r(9,37,7,2,ink)+r(16,37,7,2,ink);
+ s+=r(8,23,2,6,"#d7edf2")+r(22,23,2,6,"#d7edf2")+r(10,22,2,5,"#f3d5e2")+r(20,22,2,5,"#f3d5e2");
+ s+=r(12,23,1,1,"#ef91b6")+r(19,23,1,1,"#ef91b6")+r(12,24,1,1,"#ef91b6")+r(19,24,1,1,"#ef91b6");
+ if(a&&G&&G.eq){var e=G.eq;if(e.gown){s+=r(8,21,16,11,"#fff")+r(6,22,3,9,"#fff")+r(23,22,3,9,"#fff")+r(14,22,4,10,scrub)+r(15,24,2,5,"#ef91b6")}if(e.badge)s+=r(20,28,3,3,"#fff")+r(21,28,1,1,"#e63946");if(e.mask)s+=r(9,15,14,3,"#b8e5ec");if(e.glass)s+=r(9,12,6,1,ink)+r(18,12,6,1,ink)+r(9,13,1,3,ink)+r(14,13,1,3,ink)+r(18,13,1,3,ink)+r(23,13,1,3,ink)+r(15,13,3,1,ink)}
+ return '<svg viewBox="0 0 32 40" width="'+z+'" height="'+(z*1.25)+'" shape-rendering="crispEdges" aria-hidden="true" style="overflow:visible;image-rendering:pixelated">'+s+'</svg>';
+}function soloSetup(){
  $("setup").innerHTML='<h1>🧸 สร้างหมอของคุณ 🧸</h1><div class="box"><p class="mut" style="text-align:center">แตะตัวละครเพื่อเลือกเพศ</p><div class="row" id="pick"></div><label style="margin-top:16px;">🎨 สีชุดและหมวกประจำตัว</label><div class="row" id="cols" style="flex-wrap:wrap;"></div><label for="nm" style="margin-top:16px;">📝 ชื่อคุณหมอ</label><input id="nm" value="'+esc(P.n)+'" maxlength="20"><label for="hp">🏥 สถาบัน / โรงพยาบาล</label><input id="hp" value="'+esc(P.h)+'" maxlength="30"><label for="tm">⏳ โหมดเวลา</label><select id="tm"><option value="0">ชิลๆ ไม่จับเวลา ☕</option><option value="25">ตื่นเต้น! 25 วินาทีต่อเคส ⚡</option></select><button class="alt" id="shp" style="margin-top: 16px;">🛍️ ร้านค้าสวัสดิการ (🪙 '+G.gold+')</button><button id="go">🚀 เข้าเวรเลย!</button><button class="alt" id="bk">กลับเมนู 🏡</button></div>';
  function draw(){
   var a="";[["m","หมอผู้ชาย 👦"],["f","หมอผู้หญิง 👧"]].forEach(function(x){
@@ -617,6 +639,8 @@ function finish(){
 </script>
 </body>
 </html>
+
+
 
 
 
