@@ -197,7 +197,7 @@ select, input {
 #menu h1 { display:none; }
 #menu > p.mut { background:rgba(255,255,255,.88); border:2px solid #f3b5d0; border-radius:16px; padding:9px 12px; }
 #game { position:relative; isolation:isolate; min-height:72vh; padding:12px; border-radius:24px; overflow:hidden; }
-#game::before { content:""; position:absolute; inset:0; z-index:-2; background-image:url('assets/hospital-room-bg.png'); background-size:cover; background-position:center; opacity:.92; }
+#game::before { content:""; position:absolute; inset:0; z-index:-2; background-image:url('assets/gameplay-bg.png'); background-size:cover; background-position:center; opacity:.92; }
 #game::after { content:""; position:absolute; inset:0; z-index:-1; background:rgba(255,245,251,.38); pointer-events:none; }
 #game .box { background:rgba(255,255,255,.93); backdrop-filter:blur(2px); }
 #game .case, #game .data, #game .ex { background-color:rgba(255,255,255,.94); }
@@ -205,32 +205,149 @@ select, input {
 .site-credit span { display:inline-block; background:rgba(255,255,255,.82); border:2px solid #f3bfd5; border-radius:999px; padding:5px 14px; }
 @media(max-width:420px){ .title-hero{max-height:300px;border-width:3px} #game{padding:7px} }
 
+
+/* === KRUPOY fullscreen pixel-game layout === */
+html,body{min-height:100%;}
+body{background:#fce8f2;overflow-x:hidden}
+main{width:100%;max-width:none;margin:0;padding:0}
+#menu,#setup,#result{min-height:100svh;padding:clamp(14px,2.4vw,30px);}
+#menu{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(8px,1.4vh,16px);overflow:hidden;background:linear-gradient(180deg,#bde9ff 0%,#fce2f1 62%,#ffd5e5 100%);}
+#menu:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 10% 18%,#fff9 0 2px,transparent 3px),radial-gradient(circle at 90% 24%,#fff9 0 3px,transparent 4px),linear-gradient(135deg,#dff5ff55,#ffecf655);background-size:46px 46px,67px 67px,auto;pointer-events:none}
+#menu>*{position:relative;z-index:1}
+.title-hero{width:min(92vw,980px);height:auto;max-height:47svh;object-fit:contain;border:0;border-radius:24px;box-shadow:0 8px 0 #d88cb2,0 14px 30px #a86d9630;margin:0 auto 4px;image-rendering:pixelated}
+#menu h1{display:none}
+.menu-intro{margin:0 auto;text-align:center;font-size:clamp(12px,1.4vw,17px);font-weight:700;color:#80516f;background:#ffffffd9;border:2px solid #f3b5d0;border-radius:999px;padding:5px 18px;box-shadow:0 3px 0 #e7a4c3}
+.menu-actions{width:min(92vw,760px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.3vw,14px)}
+.menu-actions button{margin:0;min-height:clamp(48px,7.4vh,70px);font-size:clamp(14px,1.7vw,20px);border-radius:18px;box-shadow:0 5px 0 #cb8eaf;padding:10px 12px;background:#fff}
+.menu-actions button:first-child{grid-column:1/-1;background:linear-gradient(#ffe994,#ffc94d);border-color:#e6a62e;box-shadow:0 6px 0 #c58b2a;font-size:clamp(18px,2.2vw,26px);min-height:clamp(54px,8vh,76px)}
+.menu-actions #bTeam{background:#dff3ff;border-color:#68bce8;box-shadow:0 5px 0 #579fc9}
+.menu-actions #bShop{background:#ffe3f0;border-color:#e88ab5;box-shadow:0 5px 0 #c9789f}
+.menu-actions #bRep{background:#eee5ff;border-color:#b39ae7;box-shadow:0 5px 0 #9179c4}
+.menu-actions #bSettings{background:#d9fff3;border-color:#72cbb5;box-shadow:0 5px 0 #4ba38d}
+.site-credit{margin:0 auto;padding:0 8px 3px;text-align:center;font-size:clamp(11px,1.3vw,15px);color:#81506f;font-weight:700}
+.site-credit span{background:#fff9;border:2px solid #efb5d0;border-radius:999px;padding:5px 16px;display:inline-block}
+#setup{max-width:760px;margin:0 auto;padding-top:22px}
+#game{position:relative;isolation:isolate;min-height:100svh;width:100%;padding:clamp(12px,2vw,26px);border-radius:0;overflow:hidden;display:flex;flex-direction:column;gap:12px;background:#f9dce9}
+#game:before{content:"";position:absolute;inset:0;z-index:-2;background-image:url('assets/gameplay-bg.png');background-size:cover;background-position:center;opacity:.95}
+#game:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#e9f7ff88,#fff0f7a8);pointer-events:none}
+#game>*{position:relative}
+#game .game-hud{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(100%,1120px);margin:0 auto}
+#game .hud-chip{background:#fff2f8ed;border:3px solid #e9a6c7;border-radius:16px;padding:8px 10px;text-align:center;font-weight:700;box-shadow:0 4px 0 #cb8dae;color:#69405b;font-size:clamp(12px,1.5vw,17px)}
+#game .game-board{width:min(100%,1120px);margin:0 auto;display:grid;grid-template-columns:minmax(230px,.78fr) minmax(0,1.35fr);gap:14px;align-items:stretch;flex:1}
+#game .patient-panel,#game .question-panel{background:#fff9fdf0;border:3px solid #eaa6c7;border-radius:22px;padding:clamp(12px,1.8vw,20px);box-shadow:0 5px 0 #ce91b0;min-width:0}
+#game .patient-panel{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px}
+#game .patient-scene{width:100%;min-height:155px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#e6f6ff,#fce5f1);border:2px dashed #a8cfe7;border-radius:18px;padding:12px}
+#game .patient-avatar{font-size:clamp(58px,8vw,90px);line-height:1;filter:drop-shadow(0 4px 0 #e8b4cd)}
+#game .monitor{font-size:clamp(26px,4vw,42px);background:#e4f7ee;border:3px solid #8fc9b0;border-radius:12px;padding:10px}
+#game .case{width:100%;background:#fff5d9;border-color:#f1bd70;text-align:left}
+#game .data{width:100%;text-align:left}
+#game .question-panel{display:flex;flex-direction:column;justify-content:center}
+#game .question-title{font-size:clamp(16px,2vw,23px);font-weight:700;color:#75405f;background:#ffe4f0;border:2px solid #edb0ce;border-radius:15px;padding:12px;margin:0 0 12px}
+#game .question-text{font-size:clamp(15px,1.8vw,21px);font-weight:700;line-height:1.55;margin:8px 0 12px}
+#game #opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#game .opt{width:100%;margin:0;text-align:left;min-height:56px;font-size:clamp(13px,1.45vw,17px);background:#fff;border-color:#d99cbd;box-shadow:0 4px 0 #c58cae;border-radius:15px;padding:10px 12px}
+#game #tools{display:flex;gap:8px;flex-wrap:wrap}
+#game #tools button{flex:1;min-width:145px;width:auto;margin:0;font-size:13px;background:#fff0c9}
+#game #fb{margin-top:8px}
+#game #fb .ex{background:#fff7e9;border:2px solid #f0c68d;border-radius:14px}
+#game #nx{background:#ff8db8;color:#fff;border-color:#d75d91;box-shadow:0 5px 0 #b84e7c}
+#game .teams{width:100%}
+#game .game-progress{width:min(100%,1120px);margin:0 auto;background:#fff;border:2px solid #e6a9c7;border-radius:99px;height:13px;overflow:hidden}
+#game .game-progress i{display:block;height:100%;background:linear-gradient(90deg,#ff9fc5,#ffd36b);border-radius:99px}
+#result{max-width:760px;margin:0 auto}
+@media(max-width:700px){
+ .title-hero{width:min(96vw,720px);max-height:40svh}
+ #menu{justify-content:flex-start;padding:14px 12px;gap:10px}
+ .menu-actions{width:min(96vw,520px)}
+ .menu-actions button{min-height:52px}
+ #game{padding:10px;gap:8px}
+ #game .game-hud{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #game .game-board{grid-template-columns:1fr;gap:8px}
+ #game .patient-panel{padding:9px}
+ #game .patient-scene{min-height:90px}
+ #game .patient-avatar{font-size:54px}
+ #game .monitor{font-size:24px;padding:5px}
+ #game .question-panel{padding:12px}
+ #game #opts{grid-template-columns:1fr;gap:7px}
+ #game .opt{min-height:46px}
+}
+@media(max-height:700px) and (min-width:701px){.title-hero{max-height:38svh}#menu{gap:7px}.menu-actions button{min-height:48px}}
+
+
+/* ===== Final full-screen KRUPOY pixel-art layout ===== */
+html,body{width:100%;min-height:100%;margin:0}
+body{overflow-x:hidden;background:#fce8f2}
+main{width:100%;max-width:none;margin:0;padding:0}
+#menu{position:relative;isolation:isolate;width:100%;height:100svh;min-height:560px;padding:0;overflow:hidden;display:block;background:#f4d9ec}
+#menu:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#fff0 55%,#fff4 100%);pointer-events:none}
+#menu>.title-hero{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;border:0;border-radius:0;box-shadow:none;margin:0;image-rendering:auto;z-index:-2}
+#menu h1,#menu>.menu-intro{display:none}
+#menu>.menu-actions{position:absolute;right:clamp(18px,4vw,72px);bottom:clamp(90px,12vh,130px);width:min(34vw,510px);display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;border:2px solid #fff;border-radius:24px;background:#fffaf0d9;box-shadow:0 8px 0 #c88eaf,0 16px 35px #6c4b6d35;backdrop-filter:blur(5px)}
+#menu>.menu-actions button{margin:0;min-height:clamp(44px,6vh,62px);font-size:clamp(13px,1.2vw,19px);border-radius:15px;padding:8px 10px}
+#menu>.menu-actions button:first-child{grid-column:1/-1;min-height:clamp(52px,7vh,72px);font-size:clamp(17px,1.7vw,25px)}
+#menu>.menu-actions #bSolo{background:linear-gradient(#fff0a7,#ffc94f);border-color:#e7ae43;box-shadow:0 4px 0 #c18a2e}
+#menu>.menu-actions #bTeam{background:#e0f4ff;border-color:#78c1e6;box-shadow:0 4px 0 #579fc9}
+#menu>.menu-actions #bShop{background:#ffe3f0;border-color:#e88ab5;box-shadow:0 4px 0 #c9789f}
+#menu>.menu-actions #bRep{background:#eee5ff;border-color:#b39ae7;box-shadow:0 4px 0 #9179c4}
+#menu>.menu-actions #bSettings{background:#dcfff1;border-color:#72cbb5;box-shadow:0 4px 0 #4ba38d}
+#menu>.site-credit{position:absolute;left:clamp(12px,2vw,32px);bottom:18px;margin:0;padding:0;z-index:2}
+#menu>.site-credit span{background:#fffdf0e8;border:2px solid #f3bfd5;border-radius:999px;padding:7px 14px;display:inline-block;font-size:clamp(10px,1vw,14px)}
+.audio-controls{position:absolute;right:18px;top:16px;z-index:5;display:flex;gap:8px}
+.audio-controls button{width:auto;margin:0;min-height:38px;padding:6px 12px;border-radius:999px;background:#fffdf0e8;border:2px solid #e6a8c8;font-size:13px}
+#setup,#result{min-height:100svh;padding:clamp(14px,2.4vw,30px);max-width:900px;margin:0 auto}
+#game{position:relative;isolation:isolate;min-height:100svh;width:100%;padding:clamp(12px,2vw,26px);border-radius:0;overflow:hidden;display:flex;flex-direction:column;gap:12px;background:#f9dce9}
+#game:before{content:"";position:absolute;inset:0;z-index:-2;background-image:url('assets/gameplay-bg.png');background-size:cover;background-position:center;background-repeat:no-repeat}
+#game:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#e9f7ff55,#fff0f766);pointer-events:none}
+#game>*{position:relative}
+#game .game-hud{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(100%,1280px);margin:0 auto}
+#game .hud-chip{background:#fff2f8ed;border:3px solid #e9a6c7;border-radius:16px;padding:8px 10px;text-align:center;font-weight:700;box-shadow:0 4px 0 #cb8dae;color:#69405b;font-size:clamp(12px,1.5vw,17px)}
+#game .game-board{width:min(100%,1280px);margin:0 auto;display:grid;grid-template-columns:minmax(230px,.78fr) minmax(0,1.35fr);gap:14px;align-items:stretch;flex:1}
+#game .patient-panel,#game .question-panel{background:#fff9fdf2;border:3px solid #eaa6c7;border-radius:22px;padding:clamp(12px,1.8vw,20px);box-shadow:0 5px 0 #ce91b0;min-width:0}
+#game .patient-panel{backdrop-filter:blur(3px)}
+#game .question-panel{backdrop-filter:blur(4px)}
+@media(max-width:760px){
+ #menu{min-height:640px;height:100svh}
+ #menu>.title-hero{object-fit:cover;object-position:50% 36%}
+ #menu>.menu-actions{right:50%;transform:translateX(50%);bottom:clamp(78px,10vh,100px);width:min(92vw,520px);padding:9px;gap:7px;border-radius:18px}
+ #menu>.menu-actions button{min-height:44px;font-size:13px;padding:6px}
+ #menu>.menu-actions button:first-child{min-height:50px;font-size:17px}
+ #menu>.site-credit{left:50%;transform:translateX(-50%);bottom:8px;white-space:nowrap}
+ .audio-controls{top:8px;right:8px;gap:5px}
+ .audio-controls button{font-size:11px;padding:5px 8px;min-height:32px}
+ #game{padding:8px;gap:8px}
+ #game .game-hud{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #game .game-board{grid-template-columns:1fr;gap:8px}
+ #game .patient-panel{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px}
+ #game .patient-panel>.tag,#game .patient-panel>div[style*="font-weight"]{grid-column:1/-1}
+ #game .patient-scene{min-height:100px;padding:6px}
+ #game .case,#game .data{margin:0;padding:8px;font-size:12px}
+ #game .question-panel{padding:10px}
+ #game #opts{grid-template-columns:1fr}
+ #game .opt{min-height:44px}
+}
+@media(max-width:420px){#menu>.title-hero{object-position:50% 28%}#menu>.menu-actions{bottom:72px}#menu>.site-credit span{font-size:9px;padding:4px 8px}}
+
 </style>
 </head>
 <body>
 <main>
 <section id="menu">
-<img class="title-hero" src="assets/title-hero.png" alt="เวรฉุกเฉิน ระบบหมุนเวียนเลือด by KRUPOY">
-<p class="mut" style="text-align: center;">เกมทบทวนชีววิทยา ม.5 แสนสนุก!<br>รับเคสคนไข้ ตัดสินใจ แล้วดูผลทันที ✨</p>
-<div class="box">
-<button id="bSolo">🧸 เล่นเดี่ยว: หมอเวรน่ารัก</button>
-<p class="mut">8 เคสต่อรอบ มี 3 พลังใจ ข้อที่ผิดจะวนกลับมาอีกครั้งนะ ฮึบๆ ✌️</p>
+<div class="audio-controls"><button id="musicToggle" type="button">🎵 เพลง: ปิด</button><button id="sfxToggle" type="button">🔊 เสียง: เปิด</button></div>
+<img class="title-hero" src="assets/title-screen.png" alt="เวรฉุกเฉิน ระบบหมุนเวียนเลือด by KRUPOY">
+<p class="menu-intro">เกมทบทวนชีววิทยา ม.5 · รับเคสคนไข้ วินิจฉัย และช่วยเหลือผู้ป่วย ✨</p>
+<div class="menu-actions">
+<button id="bSolo">▶ เริ่มเกม · เล่นเดี่ยว</button>
+<button id="bTeam">👥 เล่นเป็นทีม</button>
+<button id="bShop">🛍️ ร้านค้าสวัสดิการ</button>
+<button id="bRep">📊 รายงานผล</button>
+<button id="bSettings">⚙️ ตั้งค่า</button>
 </div>
-<div class="box">
-<button id="bTeam">🩺 เล่นทีม: ทีมแพทย์จิ๋ว</button>
-<p class="mut">2-4 ทีมสลับกันรับเคส หมุนบทบาทช่วยกันทุกเคสเลย 🤝</p>
-</div>
-<div class="box">
-<button class="alt" id="bRep">📋 รายงานเวรประจำวัน</button>
-<p class="mut">ดูสถิติสะสม หัวข้อที่ต้องทบทวน และเวรล่าสุด</p>
-</div>
+<footer class="site-credit"><span>💗 พัฒนาโดยครูภัทรกันย์ กิติยศ 💗</span></footer>
 </section>
-
 <section id="setup" class="hidden"></section>
 <section id="game" class="hidden"></section>
 <section id="result" class="hidden"></section>
 </main>
-<footer class="site-credit"><span>💗 พัฒนาโดยครูภัทรกันย์ กิติยศ 💗</span></footer>
 <script>
 // ข้อมูลคำถามเหมือนเดิม
 var Q=[
@@ -302,9 +419,20 @@ function report(){
  $("rr").onclick=function(){var b=$("rr");if(!b.dataset.s){b.dataset.s=1;b.textContent="แตะอีกครั้งเพื่อยืนยันการล้างข้อมูล 🥺";return}H={shifts:[],topics:{}};G={gold:100,eq:{},own:{},inv:{}};save();report()};
 }
 $("bRep").onclick=report;
+$("bShop").onclick=function(){shop(true)};
+$("bSettings").onclick=function(){
+ var old=document.getElementById("settingsPanel");if(old){old.remove();return;}
+ var panel=document.createElement("div");panel.id="settingsPanel";panel.className="box";
+ panel.style.cssText="position:fixed;z-index:50;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(92vw,420px);background:#fff9fdf5;box-shadow:0 15px 50px #59405b55";
+ panel.innerHTML='<h2>⚙️ ตั้งค่าเกม</h2><p>🎵 เพลงประกอบ: '+(Music.enabled?'เปิด':'ปิด')+'</p><button id="panelMusic">เปิด/ปิดเพลง</button><p>🔊 เอฟเฟกต์เสียง: '+(Music.sfx?'เปิด':'ปิด')+'</p><button id="panelSfx">เปิด/ปิดเอฟเฟกต์</button><button id="panelClose" class="alt">ปิด</button>';
+ document.body.appendChild(panel);
+ document.getElementById("panelMusic").onclick=function(){Music.toggleMusic();syncAudioButtons();panel.remove();};
+ document.getElementById("panelSfx").onclick=function(){Music.sfx=!Music.sfx;syncAudioButtons();panel.remove();};
+ document.getElementById("panelClose").onclick=function(){panel.remove();};
+};
 var ITEMS=[{k:"glass",n:"แว่นตาเด็กเรียน",p:100,t:"eq",ic:"👓"},{k:"mask",n:"หน้ากากอนามัยสีพาสเทล",p:80,t:"eq",ic:"😷"},{k:"gown",n:"เสื้อกาวน์หมอน้อย",p:200,t:"eq",ic:"🥼"},{k:"badge",n:"บัตรแพทย์ฝึกหัด",p:60,t:"eq",ic:"🪪"},{k:"coffee",n:"นมเย็นแสนดี (+1 พลังใจเวรหน้า)",p:150,t:"use",ic:"🥤"},{k:"book",n:"สมุดโน้ตเวทมนตร์ (ใบ้ฟรี 1 ครั้ง)",p:120,t:"use",ic:"📒"}];
 function useItem(k){var n=G.inv[k]||0;if(n>0){G.inv[k]--;return 1}return 0}
-function shop(){save();
+function shop(fromMenu){save();
  var h='<h1>🛍️ ร้านค้าสวัสดิการสุดคิวท์</h1><div class="box"><div style="display:flex;gap:10px;align-items:center"><div class="avatar-wrap">'+doc(P.g,P.c,64,1)+'</div><p class="px" style="font-size:14px; font-weight: bold; color: var(--gold); background: var(--ink); padding: 4px 12px; border-radius: 20px;">🪙 '+G.gold+'</p></div>';
  ITEMS.forEach(function(it){var o=G.own[it.k],u=it.t==="use",n=G.inv[it.k]||0;
   h+='<div class="case" style="display:flex;gap:8px;align-items:center;justify-content:space-between"><span>'+it.ic+' '+it.n+(u?' <br><span class="mut">(มี '+n+' ชิ้น)</span>':'')+'</span><button style="width:auto;margin:0; font-size:14px;" data-k="'+it.k+'">'+(o&&!u?(G.eq[it.k]?"ถอด ❌":"ใส่ ✨"):"ซื้อ "+it.p+" 🪙")+'</button></div>'});
@@ -314,7 +442,7 @@ function shop(){save();
   if(it.t==="eq"&&G.own[it.k]){G.eq[it.k]=!G.eq[it.k]}
   else if(G.gold>=it.p){G.gold-=it.p;if(it.t==="use")G.inv[it.k]=(G.inv[it.k]||0)+1;else{G.own[it.k]=1;G.eq[it.k]=1}}
   shop()}});
- $("bk2").onclick=soloSetup;
+ $("bk2").onclick=function(){if(fromMenu)show("menu");else soloSetup()};
 }
 function doc(g,c,z,a){var f=g==="f",r=function(x,y,w,h,k){return'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+k+'" rx="0.5"/>'};
  var s=(f?r(3,4,2,7,"#5D4037")+r(11,4,2,7,"#5D4037"):"")+r(4,4,8,6,"#ffccbc")+r(4,4,8,1,"#5D4037")+r(4,1,8,3,c)+r(3,3,10,1,c)+r(5,6,2,2,"#3e2723")+r(9,6,2,2,"#3e2723")+r(4,8,1,1,"#ff8a80")+r(11,8,1,1,"#ff8a80")+r(7,9,2,1,"#e57373")+r(3,11,10,6,c)+r(2,11,1,5,c)+r(13,11,1,5,c)+r(6,11,1,3,"#fff")+r(9,11,1,3,"#fff")+r(7,14,2,1,"#cfd6dd")+r(4,17,3,2,c)+r(9,17,3,2,c)+r(4,19,3,1,"#fff")+r(9,19,3,1,"#fff");
@@ -336,6 +464,28 @@ function soloSetup(){
  $("bk").onclick=function(){show("menu")};
  $("go").onclick=function(){P.n=$("nm").value||"หมอ";P.h=$("hp").value||"รพ. ใจดี";startSolo(P.n,+$("tm").value)};
 }
+
+// ===== Original pastel chiptune music + UI sound effects (Web Audio, no external copyrighted track) =====
+var Music=(function(){
+ var ctx=null,master=null,musicGain=null,enabled=false,sfx=true,timer=null,step=0;
+ var melody=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,587.33,659.25,783.99,698.46,659.25,587.33,523.25];
+ var bass=[130.81,164.81,196,164.81,146.83,174.61,220,174.61];
+ function init(){if(!ctx){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;ctx=new AC();master=ctx.createGain();master.gain.value=.24;master.connect(ctx.destination);musicGain=ctx.createGain();musicGain.gain.value=.16;musicGain.connect(master);}if(ctx.state==='suspended')ctx.resume();return true;}
+ function tone(freq,duration,wave,volume,when){if(!ctx||!master)return;var o=ctx.createOscillator(),g=ctx.createGain();o.type=wave||'triangle';o.frequency.setValueAtTime(freq,when);g.gain.setValueAtTime(.0001,when);g.gain.exponentialRampToValueAtTime(volume||.06,when+.025);g.gain.exponentialRampToValueAtTime(.0001,when+duration);o.connect(g);g.connect(musicGain);o.start(when);o.stop(when+duration+.03);}
+ function tick(){if(!enabled||!ctx)return;var t=ctx.currentTime+.02;var n=melody[step%melody.length];tone(n,.22,'square',.035,t);if(step%2===0)tone(bass[Math.floor(step/2)%bass.length],.38,'triangle',.055,t);if(step%4===0)tone(n*2,.08,'sine',.012,t+.12);step++;}
+ function start(){if(!init())return;enabled=true;clearInterval(timer);tick();timer=setInterval(tick,260);}
+ function stop(){enabled=false;clearInterval(timer);timer=null;}
+ function toggleMusic(){if(enabled)stop();else start();return enabled;}
+ function click(){if(!sfx||!init())return;var t=ctx.currentTime+.005;tone(880,.07,'square',.035,t);tone(1174.66,.09,'triangle',.025,t+.045);}
+ function correct(){if(!sfx||!init())return;var t=ctx.currentTime+.005;[659.25,783.99,987.77].forEach(function(n,i){tone(n,.15,'triangle',.05,t+i*.09)});}
+ function wrong(){if(!sfx||!init())return;var t=ctx.currentTime+.005;tone(220,.16,'sawtooth',.035,t);tone(164.81,.2,'triangle',.03,t+.1);}
+ return{get enabled(){return enabled},get sfx(){return sfx},toggleMusic:toggleMusic,toggleSfx:function(){sfx=!sfx;return sfx},click:click,correct:correct,wrong:wrong};
+})();
+function syncAudioButtons(){var m=document.getElementById('musicToggle'),s=document.getElementById('sfxToggle');if(m)m.textContent=Music.enabled?'🎵 เพลง: เปิด':'🎵 เพลง: ปิด';if(s)s.textContent=Music.sfx?'🔊 เสียง: เปิด':'🔇 เสียง: ปิด';}
+document.getElementById('musicToggle').onclick=function(){Music.toggleMusic();syncAudioButtons();};
+document.getElementById('sfxToggle').onclick=function(){Music.toggleSfx();syncAudioButtons();};
+document.addEventListener('click',function(e){if(e.target.closest('button')&&!['musicToggle','sfxToggle'].includes(e.target.closest('button').id))Music.click();},true);
+
 $("bSolo").onclick=function(){soloSetup()};
 
 $("bTeam").onclick=function(){
@@ -359,40 +509,34 @@ function hearts(n){var s="";for(var i=0;i<Math.max(3,n);i++)s+=i<n?"💖":"🤍"
 function render(){
  clearInterval(T);
  if(S.i>=S.queue.length)return finish();
- var q=S.queue[S.i];S.cur={hid:[],done:false};
- var h='<div class="box" style="border-width: 4px;">';
- if(S.mode==="solo"){
-  h+='<div style="display:flex;gap:10px;align-items:center;margin-bottom:12px"><div class="avatar-wrap">'+doc(S.P.g,S.P.c,44,1)+'</div><div><b>คุณ'+esc(S.name)+'</b><br><span class="mut">'+esc(S.P.h)+'</span></div></div><div class="bar"><span>เคส '+(S.i+1)+'/'+S.queue.length+' 🗂️</span><span>'+hearts(S.lives)+'</span><span>🪙 '+S.gold+'</span><span style="color:var(--accent);">⭐ '+S.score+'</span></div>';
- }else{
-  var tix=S.i%S.n,rnd=Math.floor(S.i/S.n);
-  h+='<div class="bar"><span>เคสที่ '+(S.i+1)+'/'+S.queue.length+' 🗂️</span></div><div class="teams" style="margin:12px 0">';
-  S.teams.forEach(function(t,k){h+='<div class="tm'+(k===tix?' on':'')+'"><div class="avatar-wrap" style="margin-bottom:6px; border:none; padding:0;">'+doc(k%2?"f":"m",["#f48fb1","#81c784","#64b5f6","#ba68c8"][k],32)+'</div><br><b>'+t.name+'</b><br>⭐ '+t.score+' | 🪙 '+t.gold+'</div>'});
-  h+='</div>';
- }
- h+='<div class="meter" style="margin:12px 0"><i style="width:'+(S.i/S.queue.length*100)+'%"></i></div>';
+ var q=S.queue[S.i], total=S.queue.length;S.cur={hid:[],done:false};
+ var heartsNow=S.mode==="solo"?hearts(S.lives):"🤝 โหมดทีม";
+ var scoreNow=S.mode==="solo"?S.score:S.teams.reduce(function(a,t){return a+t.score},0);
+ var goldNow=S.mode==="solo"?S.gold:S.teams[S.i%S.n].gold;
+ var caseLabel="เคส "+(S.i+1)+" / "+total;
+ var h='<div class="game-hud">';
+ h+='<div class="hud-chip">💗 '+heartsNow+'</div><div class="hud-chip">⭐ คะแนน '+scoreNow+'</div><div class="hud-chip">🪙 เหรียญ '+goldNow+'</div><div class="hud-chip">🗂️ '+caseLabel+'</div></div>';
+ h+='<div class="game-progress"><i style="width:'+Math.round(S.i/total*100)+'%"></i></div>';
+ h+='<div class="game-board"><section class="patient-panel"><div class="tag">🚑 ห้องฉุกเฉิน · '+esc(q.t)+'</div>';
+ h+='<div class="patient-scene"><div class="patient-avatar">'+(S.mode==="solo"?doc(S.P.g,S.P.c,72,1):'🧑‍⚕️')+'</div><div class="monitor">💓<br><span style="font-size:12px">ECG</span></div></div>';
+ h+='<div style="font-weight:700;color:#8b5574">🩺 แฟ้มผู้ป่วย</div><div class="case"><b>อาการ:</b><br>'+esc(q.c)+'</div>';
+ if(q.d)h+='<div class="data"><b>📋 ผลตรวจ:</b><br>'+esc(q.d)+'</div>';
  if(S.mode==="team"){
-  var t=S.teams[tix],first=rnd%S.m;
-  h+='<p style="background:var(--ok); padding:10px; border-radius:12px; border:2px solid var(--green)">🌟 <b>'+t.name+'</b> รับเคสนะค้าบ บทบาทรอบนี้คือ:</p><ul class="mut" style="margin:8px 0;padding-left:24px">';
-  for(var r=0;r<Math.min(S.m,4);r++)h+='<li><b>คนที่ '+(((first+r)%S.m)+1)+'</b>: '+ROLES[r]+'</li>';
-  h+='</ul>';
+  var tix=S.i%S.n,rnd=Math.floor(S.i/S.n),t=S.teams[tix],first=rnd%S.m;
+  h+='<div class="teams">';S.teams.forEach(function(team,k){h+='<div class="tm'+(k===tix?' on':'')+'"><b>'+team.name+'</b><br>⭐ '+team.score+'</div>'});h+='</div>';
+  h+='<p class="mut">'+t.name+' รับเคสนี้ · บทบาทหมุนเวียน</p>';
+  h+='<ul class="mut" style="text-align:left;margin:0;padding-left:20px">';for(var r=0;r<Math.min(S.m,4);r++)h+='<li>คนที่ '+(((first+r)%S.m)+1)+': '+ROLES[r]+'</li>';h+='</ul>';
  }
- h+='<span class="tag">🏷️ '+q.t+' · เลเวล '+q.lv+'</span>';
- h+='<div class="case">🩺 <b>อาการ:</b> '+esc(q.c)+'</div>';
- if(q.d)h+='<div class="data">📊 <b>ผลตรวจ:</b> '+esc(q.d)+'</div>';
- h+='<p style="font-size:16px; margin-top:16px;">🤔 <b>'+esc(q.q)+'</b></p><div id="opts">';
- shuffleOpts(q).forEach(function(o){h+='<button class="opt" data-i="'+o.i+'">✨ '+esc(o.s)+'</button>'});
- h+='</div><div id="tools" style="margin-top:12px;"></div><div id="fb"></div>';
- var tools='';
- tools+='<button class="alt" id="hint">💡 ใช้หูฟังแพทย์วิเศษ (ตัดช้อยส์ผิด −30 🪙)</button>';
- h+='</div>';
+ h+='</section><section class="question-panel"><div class="question-title">❓ ภารกิจวินิจฉัย · เลเวล '+q.lv+'</div>';
+ h+='<p class="question-text">'+esc(q.q)+'</p><div id="opts">';
+ shuffleOpts(q).forEach(function(o,k){h+='<button class="opt" data-i="'+o.i+'"><b>'+String.fromCharCode(65+k)+'.</b> '+esc(o.s)+'</button>'});
+ h+='</div><div id="tools"></div><div id="fb"></div></section></div>';
  $("game").innerHTML=h;show("game");
+ var tools='';tools+='<button class="alt" id="hint">💡 คำใบ้ · ตัด 2 ตัวเลือก (−30 🪙)</button>';
  $("tools").innerHTML=tools;
  document.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){answer(+b.dataset.i,b)}});
  $("hint").onclick=hint;
- if(S.mode==="solo"&&S.tm){
-  S.left=S.tm;var el=document.createElement("p");el.id="clk";el.className="px";el.style="font-size:14px; text-align:center; color:var(--red); font-weight:bold;";$("tools").appendChild(el);
-  tick();T=setInterval(tick,1000);
- }
+ if(S.mode==="solo"&&S.tm){S.left=S.tm;var el=document.createElement("p");el.id="clk";el.className="px";el.style="font-size:14px;text-align:center;color:var(--red);font-weight:bold;";$("tools").appendChild(el);tick();T=setInterval(tick,1000)}
 }
 function shuffleOpts(q){
  if(!S.cur.order)S.cur.order=shuffle(q.o.map(function(s,i){return{s:s,i:i}}));
@@ -416,6 +560,7 @@ function hint(){
 function answer(i,btn){
  if(S.cur.done)return;S.cur.done=true;clearInterval(T);
  var q=S.queue[S.i],ok=i===q.a;
+ if(ok)Music.correct();else Music.wrong();
  var st=S.stats[q.t]=S.stats[q.t]||{ok:0,bad:0};
  document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;if(+b.dataset.i===q.a)b.classList.add("ok");else if(b===btn)b.classList.add("bad")});
  $("hint").disabled=true;
